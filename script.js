@@ -1,6 +1,5 @@
 // Global variables
 let currentLanguage = 'fa';
-let translations = {};
 let currentSection = 0;
 let isScrolling = false;
 let isUserScrolling = false;
@@ -13,8 +12,8 @@ const EMAILJS_SERVICE_ID = 'service_mvmdv2j';
 const EMAILJS_TEMPLATE_ID = 'template_pybdf5w';
 const EMAILJS_PUBLIC_KEY = 'wa7tcKjwCB9_S7RU7';
 
-// Translations object
-translations = {
+// Professional Translation System
+const translations = {
     fa: {
         // Navigation
         'nav-home': 'خانه',
@@ -34,38 +33,39 @@ translations = {
         
         // About Section
         'about-title': 'درباره من',
-        'about-description': 'با بیش از ۳ سال تجربه در توسعه فرانت‌اند، مهارت‌های پیشرفته‌ای در HTML، CSS و JavaScript کسب کرده‌ام. در برنامه‌نویسی با فریمورک‌های مدرن مانند React.js و Next.js مهارت دارم. همچنین با فریمورک‌های طراحی مانند Tailwind CSS و Sass آشنا هستم. توانایی کار تیمی قوی دارم و تجربه کار با استانداردهای بهینه‌سازی وب را دارم.',
-        'trait-learner': 'یادگیرنده مشتاق',
-        'trait-passionate': 'پرشور و علاقه‌مند',
+        'about-description': 'با بیش از ۳ سال تجربه در توسعه فرانت‌اند و بک‌اند، مهارت‌های پیشرفته‌ای در HTML، CSS، JavaScript، React.js و Node.js دارم. در فریمورک‌های مدرن تخصص دارم و تجربه گسترده‌ای با Next.js، Vue.js و TypeScript دارم. همچنین در فریمورک‌های استایل‌دهی مانند Tailwind CSS و Sass مهارت دارم. توانایی کار تیمی قوی و تجربه گسترده در استانداردهای بهینه‌سازی وب و بهترین شیوه‌ها دارم.',
+        'trait-learner': 'علاقه‌مند به یادگیری',
+        'trait-passionate': 'پرشور',
         'trait-problem-solver': 'حل‌کننده مسئله',
         'trait-creative': 'خلاق',
         'trait-teamwork': 'کار تیمی',
-        'trait-flexible': 'انعطاف‌پذیر',
+        'trait-flexible': 'انطباق‌پذیر',
+        'profile-title': 'برنامه‌نویس فرانت‌اند',
         
         // Skills Section
         'skills-title': 'مهارت‌های من',
         'skills-frontend': 'فرانت‌اند',
-        'skills-tools': 'ابزارها و تکنولوژی',
+        'skills-tools': 'ابزارها و تکنولوژی‌ها',
         
         // Education Section
         'education-title': 'تحصیلات و گواهینامه‌ها',
         'education-degree': 'کارشناسی مهندسی کامپیوتر',
         'education-university': 'دانشگاه تهران',
         'education-date': '۱۳۹۸ - ۱۴۰۲',
-        'education-description': 'تحصیل در رشته مهندسی کامپیوتر با گرایش نرم‌افزار. تمرکز بر روی توسعه وب و الگوریتم‌های کامپیوتری.',
+        'education-description': 'تحصیل در رشته مهندسی کامپیوتر با گرایش نرم‌افزار. تمرکز بر توسعه وب و الگوریتم‌های کامپیوتری.',
         'cert-react': 'گواهینامه React.js',
-        'cert-meta': 'Meta (Facebook)',
+        'cert-meta': 'Meta (فیس‌بوک)',
         'cert-date-1': '۱۴۰۱',
-        'cert-description-1': 'تکمیل دوره تخصصی React.js از Meta شامل Hooks، Context API، و بهترین شیوه‌های توسعه.',
+        'cert-description-1': 'تکمیل دوره تخصصی React.js از Meta شامل Hooks، Context API و بهترین شیوه‌های توسعه.',
         'cert-js': 'گواهینامه JavaScript',
         'cert-fcc': 'freeCodeCamp',
         'cert-date-2': '۱۴۰۰',
-        'cert-description-2': 'تکمیل دوره کامل JavaScript شامل ES6+، DOM Manipulation، و API Integration.',
+        'cert-description-2': 'تکمیل دوره کامل JavaScript شامل ES6+، DOM Manipulation و API Integration.',
         
         // Portfolio Section
         'portfolio-title': 'نمونه کارهای من',
-        'project-shop': 'فروشگاه آنلاین',
-        'project-shop-desc': 'پروژه فروشگاه آنلاین با استفاده از Next.js برای فرانت‌اند، Redux برای مدیریت state، و Firebase برای بک‌اند. طراحی واکنش‌گرا با Tailwind CSS.',
+        'project-shop': 'پلتفرم تجارت الکترونیک',
+        'project-shop-desc': 'پلتفرم خرید آنلاین ساخته شده با Next.js برای فرانت‌اند، Redux برای مدیریت state و Firebase برای بک‌اند. طراحی واکنش‌گرا با Tailwind CSS.',
         'project-todo': 'اپلیکیشن ToDo',
         'project-todo-desc': 'اپلیکیشن مدیریت کارها با React.js و TypeScript. شامل API های مختلف و استفاده از React Router DOM برای مسیریابی. طراحی واکنش‌گرا با Tailwind CSS.',
         'project-view': 'مشاهده پروژه',
@@ -96,20 +96,21 @@ translations = {
         // Hero Section
         'hero-welcome': 'Welcome To',
         'hero-website': 'My Website!',
-        'hero-frontend': 'Front-End',
-        'hero-developer': 'Web Developer',
-        'hero-see-works': 'See My Latest Works',
-        'hero-contact': 'Contact Me',
+        'hero-frontend': 'Full Stack',
+        'hero-developer': 'Developer',
+        'hero-see-works': 'View My Work',
+        'hero-contact': 'Get In Touch',
         
         // About Section
         'about-title': 'About Me',
-        'about-description': 'With over 3 years of experience in Front-End development, I have acquired advanced skills in HTML, CSS, and JavaScript. I am proficient in programming using modern frameworks such as React.js and Next.js. Additionally, I am familiar with design frameworks like Tailwind CSS & Sass. I possess strong teamwork abilities and have experience working with web optimization standards.',
-        'trait-learner': 'Hungry Learner',
+        'about-description': 'With over 3 years of experience in full-stack development, I have advanced skills in HTML, CSS, JavaScript, React.js, and Node.js. I specialize in modern frameworks and have extensive experience with Next.js, Vue.js, and TypeScript. I\'m also proficient in styling frameworks like Tailwind CSS and Sass. I have strong teamwork abilities and extensive experience with web optimization standards and best practices.',
+        'trait-learner': 'Eager Learner',
         'trait-passionate': 'Passionate',
         'trait-problem-solver': 'Problem Solver',
         'trait-creative': 'Creative',
-        'trait-teamwork': 'Team Work',
-        'trait-flexible': 'Flexibility',
+        'trait-teamwork': 'Team Player',
+        'trait-flexible': 'Adaptable',
+        'profile-title': 'Full Stack Developer',
         
         // Skills Section
         'skills-title': 'My Skills',
@@ -118,37 +119,37 @@ translations = {
         
         // Education Section
         'education-title': 'Education & Certifications',
-        'education-degree': 'Bachelor of Computer Engineering',
+        'education-degree': 'Bachelor\'s Degree in Computer Engineering',
         'education-university': 'University of Tehran',
         'education-date': '2019 - 2023',
-        'education-description': 'Studied Computer Engineering with a focus on software development. Concentrated on web development and computer algorithms.',
-        'cert-react': 'React.js Certificate',
+        'education-description': 'Studied Computer Engineering with a focus on Software Engineering. Concentrated on web development and computer algorithms.',
+        'cert-react': 'React.js Certification',
         'cert-meta': 'Meta (Facebook)',
         'cert-date-1': '2022',
         'cert-description-1': 'Completed specialized React.js course from Meta including Hooks, Context API, and best development practices.',
-        'cert-js': 'JavaScript Certificate',
+        'cert-js': 'JavaScript Certification',
         'cert-fcc': 'freeCodeCamp',
         'cert-date-2': '2021',
         'cert-description-2': 'Completed comprehensive JavaScript course including ES6+, DOM Manipulation, and API Integration.',
         
         // Portfolio Section
         'portfolio-title': 'My Portfolio',
-        'project-shop': 'Online Shop',
-        'project-shop-desc': 'An online store project developed using Next.js for the frontend, utilizing Redux for state management. The backend is implemented as a Serverless architecture with Firebase. The design system is built with Tailwind CSS, ensuring responsiveness across various devices.',
-        'project-todo': 'ToDo App',
-        'project-todo-desc': 'A ToDo project has been developed using React.js for the frontend, written in TypeScript. It incorporates various APIs and utilizes the React Router DOM library for routing. The design system is implemented with Tailwind CSS to ensure responsiveness across different devices.',
-        'project-view': 'See Demo',
+        'project-shop': 'E-Commerce Platform',
+        'project-shop-desc': 'Online shopping platform built with Next.js for frontend, Redux for state management, and Firebase for backend. Responsive design with Tailwind CSS.',
+        'project-todo': 'Todo Application',
+        'project-todo-desc': 'Task management application built with React.js and TypeScript. Features various APIs and React Router DOM for navigation. Responsive design with Tailwind CSS.',
+        'project-view': 'View Project',
         
         // Contact Section
-        'contact-title': 'Contact Me Anytime',
-        'contact-email': 'Mail',
+        'contact-title': 'Get In Touch',
+        'contact-email': 'Email',
         'contact-phone': 'Phone',
         'contact-telegram': 'Telegram',
         'contact-instagram': 'Instagram',
         'contact-name': 'Your Name',
         'contact-email-placeholder': 'Your Email',
         'contact-message': 'Your Message',
-        'contact-send': 'Submit',
+        'contact-send': 'Send Message',
         
         // Footer
         'footer-rights': '© 2024 Parsa Nikoonahad. All rights reserved.'
@@ -217,86 +218,16 @@ async function detectUserLocation() {
     } catch (error) {
         console.log('Could not detect location, using default language (Persian)');
         currentLanguage = 'fa';
+        document.documentElement.lang = 'fa';
+        document.documentElement.dir = 'rtl';
+        langBtn.textContent = 'EN';
         applyTranslations();
     }
 }
 
-// Apply translations to the page
+// Professional Translation System
 function applyTranslations() {
-    const elements = document.querySelectorAll('[data-translate]');
-    elements.forEach(element => {
-        const key = element.getAttribute('data-translate');
-        if (translations[currentLanguage][key]) {
-            element.textContent = translations[currentLanguage][key];
-        }
-    });
-    
-    // Update specific elements that don't have data-translate attribute
-    updateSpecificElements();
-}
-
-// Update specific elements
-function updateSpecificElements() {
-    // Navigation
-    const navLinks = document.querySelectorAll('.nav-link');
-    const navTexts = currentLanguage === 'fa' 
-        ? ['خانه', 'درباره من', 'مهارت‌ها', 'تحصیلات', 'نمونه کارها', 'تماس']
-        : ['Home', 'About', 'Skills', 'Education', 'Portfolio', 'Contact'];
-    
-    navLinks.forEach((link, index) => {
-        if (navTexts[index]) {
-            link.textContent = navTexts[index];
-        }
-    });
-    
-    // Hero section
-    const heroWelcome = document.querySelector('.title-line:first-child');
-    const heroWebsite = document.querySelector('.title-line:nth-child(2)');
-    const heroFrontend = document.querySelector('.subtitle-line:first-child');
-    const heroDeveloper = document.querySelector('.subtitle-line:nth-child(2)');
-    
-    if (currentLanguage === 'fa') {
-        if (heroWelcome) heroWelcome.textContent = 'خوش آمدید به';
-        if (heroWebsite) heroWebsite.textContent = 'وب‌سایت من!';
-        if (heroFrontend) heroFrontend.textContent = 'برنامه‌نویس';
-        if (heroDeveloper) heroDeveloper.textContent = 'فرانت‌اند';
-    } else {
-        if (heroWelcome) heroWelcome.textContent = 'Welcome To';
-        if (heroWebsite) heroWebsite.textContent = 'My Website!';
-        if (heroFrontend) heroFrontend.textContent = 'Front-End';
-        if (heroDeveloper) heroDeveloper.textContent = 'Web Developer';
-    }
-    
-    // Section titles
-    const sectionTitles = document.querySelectorAll('.section-title');
-    const titles = currentLanguage === 'fa'
-        ? ['درباره من', 'مهارت‌های من', 'تحصیلات و گواهینامه‌ها', 'نمونه کارهای من', 'تماس با من']
-        : ['About Me', 'My Skills', 'Education & Certifications', 'My Portfolio', 'Contact Me Anytime'];
-    
-    sectionTitles.forEach((title, index) => {
-        if (titles[index]) {
-            title.textContent = titles[index];
-        }
-    });
-    
-    // Update button texts
-    const buttons = document.querySelectorAll('.btn');
-    buttons.forEach(button => {
-        if (button.textContent.includes('نمونه کارهای من') || button.textContent.includes('See My Latest Works')) {
-            button.textContent = currentLanguage === 'fa' ? 'نمونه کارهای من' : 'See My Latest Works';
-        } else if (button.textContent.includes('تماس با من') || button.textContent.includes('Contact Me')) {
-            button.textContent = currentLanguage === 'fa' ? 'تماس با من' : 'Contact Me';
-        } else if (button.textContent.includes('مشاهده پروژه') || button.textContent.includes('See Demo')) {
-            button.textContent = currentLanguage === 'fa' ? 'مشاهده پروژه' : 'See Demo';
-        } else if (button.textContent.includes('ارسال پیام') || button.textContent.includes('Submit')) {
-            button.textContent = currentLanguage === 'fa' ? 'ارسال پیام' : 'Submit';
-        }
-    });
-}
-
-// Toggle language
-langBtn.addEventListener('click', function() {
-    currentLanguage = currentLanguage === 'fa' ? 'en' : 'fa';
+    console.log('Applying translations for language:', currentLanguage);
     
     // Update HTML attributes
     document.documentElement.lang = currentLanguage;
@@ -305,12 +236,51 @@ langBtn.addEventListener('click', function() {
     // Update language button
     langBtn.textContent = currentLanguage === 'fa' ? 'EN' : 'FA';
     
-    // Apply translations
-    applyTranslations();
+    // Translate all elements with data-translate attribute
+    const elements = document.querySelectorAll('[data-translate]');
+    elements.forEach(element => {
+        const key = element.getAttribute('data-translate');
+        if (translations[currentLanguage] && translations[currentLanguage][key]) {
+            element.textContent = translations[currentLanguage][key];
+        }
+    });
     
-    // Update CSS for RTL/LTR
+    // Translate placeholder attributes
+    const placeholderElements = document.querySelectorAll('[data-translate-placeholder]');
+    placeholderElements.forEach(element => {
+        const key = element.getAttribute('data-translate-placeholder');
+        if (translations[currentLanguage] && translations[currentLanguage][key]) {
+            element.placeholder = translations[currentLanguage][key];
+        }
+    });
+    
+    // Update layout direction
     updateLayoutDirection();
-});
+    
+    console.log('Translations applied successfully');
+}
+
+// Update layout direction
+function updateLayoutDirection() {
+    const body = document.body;
+        if (currentLanguage === 'fa') {
+        body.classList.add('rtl');
+        body.classList.remove('ltr');
+        } else {
+        body.classList.add('ltr');
+        body.classList.remove('rtl');
+    }
+}
+
+// Simple language toggle function
+function toggleLanguage() {
+    currentLanguage = currentLanguage === 'fa' ? 'en' : 'fa';
+    console.log('Language switched to:', currentLanguage);
+    applyTranslations();
+}
+
+// Toggle language
+langBtn.addEventListener('click', toggleLanguage);
 
 // Update layout direction
 function updateLayoutDirection() {
@@ -1480,4 +1450,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initTypingAnimation();
     initPhoneActions();
     initFormHandling();
+    
+    // Detect user location and apply translations
+    detectUserLocation();
 });
