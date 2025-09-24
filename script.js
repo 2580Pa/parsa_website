@@ -164,32 +164,44 @@ const contactForm = document.getElementById('contact-form');
 
 // Initialize the website
 document.addEventListener('DOMContentLoaded', function() {
-    // Detect user's location and set language
-    detectUserLocation();
+    // Set loading screen to always be LTR
+    setLoadingScreenDirection();
     
-    // Initialize sections
-    initSections();
+    // Show loading screen for 3 seconds
+    showLoadingScreen();
     
-    // Initialize animations
-    initAnimations();
-    
-    // Initialize navigation
-    initNavigation();
-    
-    // Initialize contact form
-    initContactForm();
-    
-    // Initialize smooth scrolling
-    initSmoothScrolling();
-    
-    // Initialize typing animation
-    initTypingAnimation();
-    
-    // Initialize auto scroll
-    initAutoScroll();
-    
-    // Initialize scroll progress
-    initScrollProgress();
+    // Initialize everything after loading screen
+    setTimeout(() => {
+        // Detect user's location and set language
+        detectUserLocation();
+        
+        // Initialize sections
+        initSections();
+        
+        // Initialize navigation
+        initNavigation();
+        
+        // Initialize contact form
+        initContactForm();
+        
+        // Initialize smooth scrolling
+        initSmoothScrolling();
+        
+        // Initialize auto scroll
+        initAutoScroll();
+        
+        // Initialize scroll progress
+        initScrollProgress();
+        
+        // Hide loading screen and start animations
+        hideLoadingScreen();
+        
+        // Start animations after loading screen is hidden
+        setTimeout(() => {
+            startEntryAnimations();
+            initAnimations();
+        }, 600); // Wait for loading screen fade out to complete
+    }, 3000);
 });
 
 // Detect user location and set language
@@ -256,6 +268,8 @@ function applyTranslations() {
     
     // Update layout direction
     updateLayoutDirection();
+    
+    // Typing animation disabled to prevent conflicts with translation system
     
     console.log('Translations applied successfully');
 }
@@ -339,6 +353,15 @@ function initAnimations() {
     // Observe elements for animation
     const animatedElements = document.querySelectorAll('.about-content, .skills-grid, .timeline-item, .portfolio-item, .contact-content');
     animatedElements.forEach(el => {
+        el.classList.add('fade-in');
+        observer.observe(el);
+    });
+    
+    // Also observe individual portfolio items and timeline items
+    const portfolioItems = document.querySelectorAll('.portfolio-item');
+    const timelineItems = document.querySelectorAll('.timeline-item');
+    
+    [...portfolioItems, ...timelineItems].forEach(el => {
         el.classList.add('fade-in');
         observer.observe(el);
     });
@@ -452,12 +475,17 @@ function initTypingAnimation() {
     const titleLines = heroTitle.querySelectorAll('.title-line');
     titleLines.forEach((line, index) => {
         const text = line.textContent;
+        
+        // Only apply typing effect if text is not empty and not already processed
+        if (text && text.trim() !== '' && !line.classList.contains('typing-processed')) {
+            line.classList.add('typing-processed');
         line.textContent = '';
         line.style.opacity = '1';
         
         setTimeout(() => {
             typeText(line, text, 50);
         }, index * 1000);
+        }
     });
 }
 
@@ -1439,6 +1467,99 @@ function showNotification(message, type) {
             }
         }, 300);
     }, 5000);
+}
+
+// Loading Screen Functions
+function setLoadingScreenDirection() {
+    const loadingScreen = document.getElementById('loading-screen');
+    if (loadingScreen) {
+        // Force loading screen to always be LTR
+        loadingScreen.style.direction = 'ltr';
+        loadingScreen.style.textAlign = 'center';
+        
+        const loaderWrapper = loadingScreen.querySelector('.loader-wrapper');
+        if (loaderWrapper) {
+            loaderWrapper.style.direction = 'ltr';
+            loaderWrapper.style.textAlign = 'center';
+        }
+    }
+}
+
+function showLoadingScreen() {
+    const loadingScreen = document.getElementById('loading-screen');
+    if (loadingScreen) {
+        loadingScreen.style.display = 'flex';
+        loadingScreen.classList.remove('hidden');
+    }
+}
+
+function hideLoadingScreen() {
+    const loadingScreen = document.getElementById('loading-screen');
+    if (loadingScreen) {
+        loadingScreen.classList.add('hidden');
+        // Remove from DOM after transition completes
+        setTimeout(() => {
+            if (loadingScreen.parentNode) {
+                loadingScreen.parentNode.removeChild(loadingScreen);
+            }
+        }, 500); // Match the CSS transition duration
+    }
+}
+
+// Start entry animations after loading screen
+function startEntryAnimations() {
+    // Reset hero animations to start fresh
+    const titleLines = document.querySelectorAll('.title-line');
+    const subtitleLines = document.querySelectorAll('.subtitle-line');
+    const heroButtons = document.querySelector('.hero-buttons');
+    
+    // Reset all hero elements to initial state
+    titleLines.forEach(line => {
+        line.style.opacity = '0';
+        line.style.transform = 'translateY(30px)';
+        line.style.animation = 'none';
+    });
+    
+    subtitleLines.forEach(line => {
+        line.style.opacity = '0';
+        line.style.transform = 'translateY(30px)';
+        line.style.animation = 'none';
+    });
+    
+    if (heroButtons) {
+        heroButtons.style.opacity = '0';
+        heroButtons.style.transform = 'translateY(30px)';
+        heroButtons.style.animation = 'none';
+    }
+    
+    // Start animations with proper timing
+    setTimeout(() => {
+        // First title line
+        if (titleLines[0]) {
+            titleLines[0].style.animation = 'slideInUp 1s ease-out forwards';
+        }
+        
+        // Second title line
+        setTimeout(() => {
+            if (titleLines[1]) {
+                titleLines[1].style.animation = 'slideInUp 1s ease-out forwards';
+            }
+        }, 300);
+        
+        // Subtitle lines
+        setTimeout(() => {
+            subtitleLines.forEach(line => {
+                line.style.animation = 'slideInUp 1s ease-out forwards';
+            });
+        }, 600);
+        
+        // Hero buttons
+        setTimeout(() => {
+            if (heroButtons) {
+                heroButtons.style.animation = 'slideInUp 1s ease-out forwards';
+            }
+        }, 900);
+    }, 100);
 }
 
 // Initialize everything when DOM is loaded
