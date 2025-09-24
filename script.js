@@ -196,11 +196,11 @@ document.addEventListener('DOMContentLoaded', function() {
         // Hide loading screen and start animations
         hideLoadingScreen();
         
-        // Start animations after loading screen is hidden
+        // Start animations after site fade-in begins
         setTimeout(() => {
             startEntryAnimations();
             initAnimations();
-        }, 600); // Wait for loading screen fade out to complete
+        }, 800); // Wait for site fade-in to start
     }, 3000);
 });
 
@@ -1495,9 +1495,19 @@ function showLoadingScreen() {
 
 function hideLoadingScreen() {
     const loadingScreen = document.getElementById('loading-screen');
+    const mainContent = document.getElementById('main-content');
+    
     if (loadingScreen) {
         loadingScreen.classList.add('hidden');
-        // Remove from DOM after transition completes
+        
+        // Start site fade-in animation after loading screen starts fading
+        setTimeout(() => {
+            if (mainContent) {
+                mainContent.classList.add('site-entrance');
+            }
+        }, 200); // Start fade-in slightly before loading screen is completely hidden
+        
+        // Remove loading screen from DOM after transition completes
         setTimeout(() => {
             if (loadingScreen.parentNode) {
                 loadingScreen.parentNode.removeChild(loadingScreen);
@@ -1513,53 +1523,60 @@ function startEntryAnimations() {
     const subtitleLines = document.querySelectorAll('.subtitle-line');
     const heroButtons = document.querySelector('.hero-buttons');
     
-    // Reset all hero elements to initial state
+    // Reset all hero elements to initial state - completely hidden
     titleLines.forEach(line => {
         line.style.opacity = '0';
         line.style.transform = 'translateY(30px)';
+        line.style.visibility = 'hidden';
         line.style.animation = 'none';
     });
     
     subtitleLines.forEach(line => {
         line.style.opacity = '0';
         line.style.transform = 'translateY(30px)';
+        line.style.visibility = 'hidden';
         line.style.animation = 'none';
     });
     
     if (heroButtons) {
         heroButtons.style.opacity = '0';
         heroButtons.style.transform = 'translateY(30px)';
+        heroButtons.style.visibility = 'hidden';
         heroButtons.style.animation = 'none';
     }
     
-    // Start animations with proper timing
+    // Start animations with proper timing - synchronized with site fade-in
     setTimeout(() => {
         // First title line
         if (titleLines[0]) {
-            titleLines[0].style.animation = 'slideInUp 1s ease-out forwards';
+            titleLines[0].style.visibility = 'visible';
+            titleLines[0].style.animation = 'slideInUp 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards';
         }
         
         // Second title line
         setTimeout(() => {
             if (titleLines[1]) {
-                titleLines[1].style.animation = 'slideInUp 1s ease-out forwards';
+                titleLines[1].style.visibility = 'visible';
+                titleLines[1].style.animation = 'slideInUp 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards';
             }
-        }, 300);
+        }, 400);
         
         // Subtitle lines
         setTimeout(() => {
             subtitleLines.forEach(line => {
-                line.style.animation = 'slideInUp 1s ease-out forwards';
+                line.style.visibility = 'visible';
+                line.style.animation = 'slideInUp 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards';
             });
-        }, 600);
+        }, 700);
         
         // Hero buttons
         setTimeout(() => {
             if (heroButtons) {
-                heroButtons.style.animation = 'slideInUp 1s ease-out forwards';
+                heroButtons.style.visibility = 'visible';
+                heroButtons.style.animation = 'slideInUp 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards';
             }
-        }, 900);
-    }, 100);
+        }, 1000);
+    }, 200);
 }
 
 // Initialize everything when DOM is loaded
