@@ -313,7 +313,10 @@ function updateLayoutDirection() {
 // Initialize navigation
 function initNavigation() {
     // Mobile menu toggle
-    navToggle.addEventListener('click', function() {
+    navToggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log('Hamburger clicked');
         navMenu.classList.toggle('active');
         navToggle.classList.toggle('active');
     });
@@ -322,6 +325,7 @@ function initNavigation() {
     const navLinks = document.querySelectorAll('.nav-link');
     navLinks.forEach(link => {
         link.addEventListener('click', function() {
+            console.log('Nav link clicked');
             navMenu.classList.remove('active');
             navToggle.classList.remove('active');
         });
@@ -329,10 +333,16 @@ function initNavigation() {
     
     // Close mobile menu when clicking outside
     document.addEventListener('click', function(event) {
-        if (!navMenu.contains(event.target) && !navToggle.contains(event.target)) {
+        if (!navMenu.contains(event.target) && !navToggle.contains(event.target) && !langBtn.contains(event.target)) {
             navMenu.classList.remove('active');
             navToggle.classList.remove('active');
         }
+    });
+    
+    // Prevent language button from opening menu
+    langBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        console.log('Language button clicked');
     });
 }
 

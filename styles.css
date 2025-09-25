@@ -1270,10 +1270,12 @@ textarea {
         background-color: var(--darker-bg);
         width: 100%;
         text-align: center;
-        transition: 0.3s ease;
+        transition: left 0.3s ease;
         box-shadow: 0 10px 27px rgba(0, 0, 0, 0.3);
         padding: 2rem 0;
         z-index: 1000;
+        height: calc(100vh - 70px);
+        overflow-y: auto;
     }
 
     .nav-menu.active {
@@ -1283,6 +1285,7 @@ textarea {
     .nav-toggle {
         display: flex;
         z-index: 1001;
+        cursor: pointer;
     }
 
     .nav-toggle.active .bar:nth-child(2) {
@@ -1297,14 +1300,68 @@ textarea {
         transform: translateY(-8px) rotate(-45deg);
     }
     
+    /* Ensure hamburger menu works properly */
+    .nav-toggle .bar {
+        width: 25px;
+        height: 3px;
+        background: var(--text-primary);
+        margin: 3px 0;
+        transition: 0.3s;
+        display: block;
+    }
+    
+    /* Add overlay to close menu when clicking outside */
+    .nav-menu.active::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: -1;
+    }
+    
     .nav-link {
         padding: 1rem 0;
         font-size: 1.1rem;
         border-bottom: 1px solid rgba(139, 92, 246, 0.1);
+        display: block;
+        width: 100%;
+        text-decoration: none;
+        color: var(--text-primary);
+        transition: color 0.3s ease;
+    }
+    
+    .nav-link:hover {
+        color: var(--primary-color);
     }
     
     .nav-link:last-child {
         border-bottom: none;
+    }
+    
+    /* Language button styling */
+    .language-switcher {
+        margin-left: 0;
+        margin-top: 1rem;
+    }
+    
+    .lang-btn {
+        background: var(--gradient-primary);
+        border: none;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 20px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+    }
+    
+    .lang-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-primary);
     }
 
     .hero-title {
