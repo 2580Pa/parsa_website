@@ -166,9 +166,6 @@ const contactForm = document.getElementById('contact-form');
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM Content Loaded');
     
-    // Initialize navigation immediately
-    initNavigation();
-    
     // Set loading screen to always be LTR
     setLoadingScreenDirection();
     
@@ -182,6 +179,9 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Initialize sections
         initSections();
+        
+        // Initialize navigation after everything else
+        initNavigation();
         
         // Initialize contact form
         initContactForm();
@@ -290,13 +290,13 @@ function updateLayoutDirection() {
 
 // Simple language toggle function
 function toggleLanguage() {
+    console.log('toggleLanguage called, current language:', currentLanguage);
     currentLanguage = currentLanguage === 'fa' ? 'en' : 'fa';
     console.log('Language switched to:', currentLanguage);
     applyTranslations();
 }
 
-// Toggle language
-langBtn.addEventListener('click', toggleLanguage);
+// Toggle language - removed duplicate event listener
 
 // Update layout direction
 function updateLayoutDirection() {
@@ -312,13 +312,32 @@ function updateLayoutDirection() {
 
 // Initialize navigation
 function initNavigation() {
-    // Mobile menu toggle
+    console.log('Initializing navigation...');
+    console.log('navToggle:', navToggle);
+    console.log('navMenu:', navMenu);
+    console.log('langBtn:', langBtn);
+    
+    // Check if elements exist
+    if (!navToggle || !navMenu || !langBtn) {
+        console.error('Navigation elements not found!');
+        return;
+    }
+    
+    // Mobile menu toggle - only for hamburger button
     navToggle.addEventListener('click', function(e) {
         e.preventDefault();
         e.stopPropagation();
         console.log('Hamburger clicked');
-        navMenu.classList.toggle('active');
-        navToggle.classList.toggle('active');
+        
+        // Toggle menu
+        const isActive = navMenu.classList.contains('active');
+        if (isActive) {
+            navMenu.classList.remove('active');
+            navToggle.classList.remove('active');
+        } else {
+            navMenu.classList.add('active');
+            navToggle.classList.add('active');
+        }
     });
     
     // Close mobile menu when clicking on a link
@@ -331,18 +350,37 @@ function initNavigation() {
         });
     });
     
+    // Language button - completely separate from menu
+    langBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log('Language button clicked - event listener working!');
+        
+        // Close menu if open
+        navMenu.classList.remove('active');
+        navToggle.classList.remove('active');
+        
+        // Toggle language
+        toggleLanguage();
+    });
+    
+    console.log('Language button event listener attached successfully');
+    
     // Close mobile menu when clicking outside
     document.addEventListener('click', function(event) {
-        if (!navMenu.contains(event.target) && !navToggle.contains(event.target) && !langBtn.contains(event.target)) {
+        // Only close if clicking outside both menu and toggle
+        if (!navMenu.contains(event.target) && !navToggle.contains(event.target)) {
             navMenu.classList.remove('active');
             navToggle.classList.remove('active');
         }
     });
     
-    // Prevent language button from opening menu
-    langBtn.addEventListener('click', function(e) {
-        e.stopPropagation();
-        console.log('Language button clicked');
+    // Close menu on escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            navMenu.classList.remove('active');
+            navToggle.classList.remove('active');
+        }
     });
 }
 

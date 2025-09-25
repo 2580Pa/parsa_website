@@ -306,11 +306,24 @@ body {
     cursor: pointer;
     font-weight: 600;
     transition: all 0.3s ease;
+    position: relative;
+    z-index: 1000;
+    pointer-events: auto;
+    user-select: none;
 }
 
 .lang-btn:hover {
     transform: translateY(-2px);
     box-shadow: var(--shadow-primary);
+}
+
+.lang-btn:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+.lang-btn:active {
+    transform: translateY(0);
 }
 
 /* Hero Section */
@@ -1270,22 +1283,27 @@ textarea {
         background-color: var(--darker-bg);
         width: 100%;
         text-align: center;
-        transition: left 0.3s ease;
+        transition: left 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
         box-shadow: 0 10px 27px rgba(0, 0, 0, 0.3);
         padding: 2rem 0;
         z-index: 1000;
         height: calc(100vh - 70px);
         overflow-y: auto;
+        opacity: 0;
+        visibility: hidden;
     }
 
     .nav-menu.active {
         left: 0;
+        opacity: 1;
+        visibility: visible;
     }
 
     .nav-toggle {
         display: flex;
         z-index: 1001;
         cursor: pointer;
+        position: relative;
     }
 
     .nav-toggle.active .bar:nth-child(2) {
@@ -1310,17 +1328,7 @@ textarea {
         display: block;
     }
     
-    /* Add overlay to close menu when clicking outside */
-    .nav-menu.active::before {
-        content: '';
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background: rgba(0, 0, 0, 0.5);
-        z-index: -1;
-    }
+    /* Remove overlay - use JavaScript instead */
     
     .nav-link {
         padding: 1rem 0;
@@ -1345,6 +1353,8 @@ textarea {
     .language-switcher {
         margin-left: 0;
         margin-top: 1rem;
+        position: relative;
+        z-index: 1002;
     }
     
     .lang-btn {
@@ -1357,11 +1367,23 @@ textarea {
         font-weight: 600;
         transition: all 0.3s ease;
         font-size: 0.9rem;
+        position: relative;
+        z-index: 1002;
+        pointer-events: auto;
     }
     
     .lang-btn:hover {
         transform: translateY(-2px);
         box-shadow: var(--shadow-primary);
+    }
+    
+    .lang-btn:active {
+        transform: translateY(0);
+    }
+    
+    .lang-btn:focus {
+        outline: 2px solid var(--primary-color);
+        outline-offset: 2px;
     }
 
     .hero-title {
