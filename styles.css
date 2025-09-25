@@ -195,6 +195,9 @@
 
 html {
     scroll-behavior: smooth;
+    /* Optimize for mobile scrolling */
+    -webkit-overflow-scrolling: touch;
+    overflow-scrolling: touch;
 }
 
 body {
@@ -203,6 +206,9 @@ body {
     color: var(--text-primary);
     line-height: 1.6;
     overflow-x: hidden;
+    /* Optimize for mobile scrolling */
+    -webkit-overflow-scrolling: touch;
+    overflow-scrolling: touch;
 }
 
 .container {
@@ -1231,8 +1237,41 @@ textarea {
     color: var(--text-muted);
 }
 
-/* Responsive Design */
+/* Mobile Performance Optimizations */
 @media (max-width: 768px) {
+    /* Disable hardware acceleration for better scroll performance */
+    * {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        -webkit-perspective: 1000;
+        perspective: 1000;
+    }
+    
+    /* Optimize scroll performance */
+    body {
+        -webkit-overflow-scrolling: touch;
+        overflow-scrolling: touch;
+    }
+    
+    /* Reduce animations on mobile for better performance */
+    .floating-icons i {
+        animation: none;
+    }
+    
+    .stars {
+        animation: none;
+    }
+    
+    .mountains {
+        animation: none;
+    }
+    
+    /* Simplify transitions on mobile */
+    .nav-link, .btn, .skill-item, .portfolio-item, .contact-item, .trait {
+        transition: transform 0.2s ease, opacity 0.2s ease;
+    }
     .nav-menu {
         position: fixed;
         left: -100%;
@@ -1333,6 +1372,11 @@ textarea {
 
     /* Hide auto scroll navigator on mobile */
     .auto-scroll-navigator {
+        display: none !important;
+    }
+    
+    /* Hide scroll progress on mobile for better performance */
+    .scroll-progress {
         display: none;
     }
 }
@@ -1561,8 +1605,8 @@ body.scrolling-disabled {
     overflow: hidden;
 }
 
-/* Smooth transitions for all elements */
-* {
+/* Smooth transitions for specific elements only - not all elements */
+.nav-link, .btn, .skill-item, .portfolio-item, .contact-item, .trait {
     transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
@@ -1583,9 +1627,9 @@ section {
     overflow-x: hidden;
 }
 
-/* Simple section transitions */
+/* Remove section transitions for better mobile performance */
 section {
-    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    /* No transitions on sections for better mobile scroll performance */
 }
 
 /* Enhanced Hero Scroll Indicator */

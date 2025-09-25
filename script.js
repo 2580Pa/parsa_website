@@ -502,26 +502,39 @@ function typeText(element, text, speed) {
     }, speed);
 }
 
-// Navbar scroll effect
+// Combined scroll effects for better performance
+let scrollTimeout;
 window.addEventListener('scroll', function() {
-    const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 100) {
-        navbar.style.background = 'rgba(15, 15, 35, 0.98)';
-        navbar.style.backdropFilter = 'blur(15px)';
-    } else {
-        navbar.style.background = 'rgba(15, 15, 35, 0.95)';
-        navbar.style.backdropFilter = 'blur(10px)';
+    // Throttle scroll events for better performance
+    if (scrollTimeout) {
+        return;
     }
-});
-
-// Parallax effect for hero background
-window.addEventListener('scroll', function() {
-    const scrolled = window.pageYOffset;
-    const heroBackground = document.querySelector('.hero-background');
     
-    if (heroBackground) {
-        heroBackground.style.transform = `translateY(${scrolled * 0.5}px)`;
-    }
+    scrollTimeout = setTimeout(() => {
+        const navbar = document.querySelector('.navbar');
+        const scrolled = window.pageYOffset;
+        
+        // Navbar effect
+        if (navbar) {
+            if (scrolled > 100) {
+                navbar.style.background = 'rgba(15, 15, 35, 0.98)';
+                navbar.style.backdropFilter = 'blur(15px)';
+            } else {
+                navbar.style.background = 'rgba(15, 15, 35, 0.95)';
+                navbar.style.backdropFilter = 'blur(10px)';
+            }
+        }
+        
+        // Parallax effect - only on desktop for performance
+        if (window.innerWidth > 768) {
+            const heroBackground = document.querySelector('.hero-background');
+            if (heroBackground) {
+                heroBackground.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        }
+        
+        scrollTimeout = null;
+    }, 16); // ~60fps
 });
 
 // Initialize sections
@@ -536,7 +549,7 @@ function initSections() {
     ];
 }
 
-// Initialize auto scroll functionality
+// Initialize auto scroll functionality - Simplified for mobile performance
 function initAutoScroll() {
     // Auto scroll indicator click handler
     const autoScrollIndicator = document.querySelector('.current-section-indicator');
@@ -554,18 +567,20 @@ function initAutoScroll() {
         });
     }
     
-    // Keyboard navigation - only next/prev
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === ' ') {
-            e.preventDefault();
-            scrollToNextSection();
-        } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
-            e.preventDefault();
-            scrollToPrevSection();
-        }
-    });
+    // Keyboard navigation - only next/prev (desktop only)
+    if (window.innerWidth > 768) {
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                scrollToNextSection();
+            } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+                e.preventDefault();
+                scrollToPrevSection();
+            }
+        });
+    }
     
-    // Normal scroll behavior - let user scroll freely within sections
+    // Simplified scroll behavior - no auto-scroll on mobile
     let scrollTimeout;
     
     window.addEventListener('scroll', function() {
@@ -574,48 +589,21 @@ function initAutoScroll() {
         isUserScrolling = true;
         clearTimeout(scrollTimeout);
         
-        // Check if user reached end of current section after they stop scrolling
-        scrollTimeout = setTimeout(() => {
-            if (!isScrolling) {
-                checkSectionEnd();
-            }
-            isUserScrolling = false;
-        }, 1000); // Increased delay to 1 second
-    });
-    
-    // Touch navigation for mobile - improved
-    let touchStartY = 0;
-    let touchEndY = 0;
-    let touchStartTime = 0;
-    let touchEndTime = 0;
-    
-    document.addEventListener('touchstart', function(e) {
-        touchStartY = e.changedTouches[0].screenY;
-        touchStartTime = Date.now();
-    });
-    
-    document.addEventListener('touchend', function(e) {
-        touchEndY = e.changedTouches[0].screenY;
-        touchEndTime = Date.now();
-        handleSwipe();
-    });
-    
-    function handleSwipe() {
-        if (isScrolling) return;
-        
-        const swipeThreshold = 80;
-        const timeThreshold = 300;
-        const diff = touchStartY - touchEndY;
-        const timeDiff = touchEndTime - touchStartTime;
-        
-        if (Math.abs(diff) > swipeThreshold && timeDiff < timeThreshold) {
-            if (diff > 0) {
-                scrollToNextSection();
-            } else {
-                scrollToPrevSection();
-            }
+        // Only check section end on desktop
+        if (window.innerWidth > 768) {
+            scrollTimeout = setTimeout(() => {
+                if (!isScrolling) {
+                    checkSectionEnd();
+                }
+                isUserScrolling = false;
+            }, 1000);
+        } else {
+            // On mobile, just reset the flag quickly
+            scrollTimeout = setTimeout(() => {
+                isUserScrolling = false;
+            }, 100);
         }
-    }
+    });
 }
 
 // Check if user reached end of current section
@@ -874,21 +862,36 @@ function updateActiveStates() {
     });
 }
 
-// Initialize scroll progress
+// Initialize scroll progress - optimized for mobile
 function initScrollProgress() {
+    // Skip scroll progress on mobile for better performance
+    if (window.innerWidth <= 768) {
+        return;
+    }
+    
     const progressBar = document.getElementById('progress-bar');
+    let progressTimeout;
     
     window.addEventListener('scroll', function() {
-        const scrollTop = window.pageYOffset;
-        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const scrollPercent = (scrollTop / docHeight) * 100;
-        
-        if (progressBar) {
-            progressBar.style.width = scrollPercent + '%';
+        // Throttle progress bar updates
+        if (progressTimeout) {
+            return;
         }
         
-        // Update current section based on scroll position
-        updateCurrentSection();
+        progressTimeout = setTimeout(() => {
+            const scrollTop = window.pageYOffset;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            
+            if (progressBar) {
+                progressBar.style.width = scrollPercent + '%';
+            }
+            
+            // Update current section based on scroll position
+            updateCurrentSection();
+            
+            progressTimeout = null;
+        }, 16); // ~60fps
     });
 }
 
