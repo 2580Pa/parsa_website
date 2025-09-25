@@ -164,10 +164,15 @@ const contactForm = document.getElementById('contact-form');
 
 // Initialize the website
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM Content Loaded');
+    
+    // Initialize navigation immediately
+    initNavigation();
+    
     // Set loading screen to always be LTR
     setLoadingScreenDirection();
     
-    // Show loading screen for 3 seconds
+    // Show loading screen immediately
     showLoadingScreen();
     
     // Initialize everything after loading screen
@@ -177,9 +182,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Initialize sections
         initSections();
-        
-        // Initialize navigation
-        initNavigation();
         
         // Initialize contact form
         initContactForm();
@@ -1493,6 +1495,9 @@ function showLoadingScreen() {
     if (loadingScreen) {
         loadingScreen.style.display = 'flex';
         loadingScreen.classList.remove('hidden');
+        console.log('Loading screen shown');
+    } else {
+        console.error('Loading screen element not found!');
     }
 }
 
