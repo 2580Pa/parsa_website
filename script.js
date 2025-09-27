@@ -40,7 +40,11 @@ const translations = {
         'trait-creative': 'خلاق',
         'trait-teamwork': 'کار تیمی',
         'trait-flexible': 'انطباق‌پذیر',
+        'profile-name': 'پارسا نیکونهاد',
         'profile-title': 'برنامه‌نویس فرانت‌اند',
+        'profile-location': 'یزد، ایران',
+        'profile-email': 'parsa.nikoonahad2000@gmail.com',
+        'profile-phone': '+98 919 409 7202',
         
         // Skills Section
         'skills-title': 'مهارت‌های من',
@@ -69,6 +73,15 @@ const translations = {
         'project-todo': 'اپلیکیشن ToDo',
         'project-todo-desc': 'اپلیکیشن مدیریت کارها با React.js و TypeScript. شامل API های مختلف و استفاده از React Router DOM برای مسیریابی. طراحی واکنش‌گرا با Tailwind CSS.',
         'project-view': 'مشاهده پروژه',
+        
+        // Tech Tags
+        'tech-nextjs': 'Next.js',
+        'tech-redux': 'Redux',
+        'tech-firebase': 'Firebase',
+        'tech-tailwind': 'Tailwind CSS',
+        'tech-react': 'React.js',
+        'tech-typescript': 'TypeScript',
+        'tech-router': 'React Router',
         
         // Contact Section
         'contact-title': 'تماس با من',
@@ -110,7 +123,11 @@ const translations = {
         'trait-creative': 'Creative',
         'trait-teamwork': 'Team Player',
         'trait-flexible': 'Adaptable',
+        'profile-name': 'Parsa Nikoonahad',
         'profile-title': 'Full Stack Developer',
+        'profile-location': 'Yazd, Iran',
+        'profile-email': 'parsa.nikoonahad2000@gmail.com',
+        'profile-phone': '+98 919 409 7202',
         
         // Skills Section
         'skills-title': 'My Skills',
@@ -139,6 +156,15 @@ const translations = {
         'project-todo': 'Todo Application',
         'project-todo-desc': 'Task management application built with React.js and TypeScript. Features various APIs and React Router DOM for navigation. Responsive design with Tailwind CSS.',
         'project-view': 'View Project',
+        
+        // Tech Tags
+        'tech-nextjs': 'Next.js',
+        'tech-redux': 'Redux',
+        'tech-firebase': 'Firebase',
+        'tech-tailwind': 'Tailwind CSS',
+        'tech-react': 'React.js',
+        'tech-typescript': 'TypeScript',
+        'tech-router': 'React Router',
         
         // Contact Section
         'contact-title': 'Get In Touch',
@@ -243,12 +269,22 @@ async function detectUserLocation() {
 function applyTranslations() {
     console.log('Applying translations for language:', currentLanguage);
     
+    // Prevent layout jumping by temporarily disabling transitions
+    document.body.style.transition = 'none';
+    document.documentElement.style.transition = 'none';
+    
     // Update HTML attributes
     document.documentElement.lang = currentLanguage;
     document.documentElement.dir = currentLanguage === 'fa' ? 'rtl' : 'ltr';
     
     // Update language button
     langBtn.textContent = currentLanguage === 'fa' ? 'EN' : 'FA';
+    
+    // Re-enable transitions after a short delay
+    setTimeout(() => {
+        document.body.style.transition = '';
+        document.documentElement.style.transition = '';
+    }, 100);
     
     // Translate all elements with data-translate attribute
     const elements = document.querySelectorAll('[data-translate]');
@@ -417,8 +453,52 @@ function initAnimations() {
     });
 }
 
+// Initialize email functionality
+function initEmailFunctionality() {
+    const emailItems = document.querySelectorAll('.email-item');
+    
+    emailItems.forEach(item => {
+        const emailBtn = item.querySelector('.email-btn');
+        const emailAddress = item.getAttribute('data-email');
+        
+        if (emailBtn && emailAddress) {
+            emailBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                openEmailClient(emailAddress);
+            });
+        }
+        
+        // Make the entire email item clickable
+        item.addEventListener('click', (e) => {
+            if (!e.target.closest('.contact-actions')) {
+                openEmailClient(emailAddress);
+            }
+        });
+        
+        // Add hover effect
+        item.style.cursor = 'pointer';
+    });
+}
+
+// Open email client
+function openEmailClient(emailAddress) {
+    const subject = encodeURIComponent('Contact from Website');
+    const body = encodeURIComponent('Hello Parsa,\n\nI would like to get in touch with you regarding...\n\nBest regards,');
+    const mailtoLink = `mailto:${emailAddress}?subject=${subject}&body=${body}`;
+    
+    // Open email client
+    window.location.href = mailtoLink;
+    
+    // Show success message
+    showNotification('Opening email client...', 'success');
+}
+
 // Initialize contact form
 function initContactForm() {
+    // Initialize email functionality
+    initEmailFunctionality();
+    
     contactForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
@@ -1543,6 +1623,11 @@ function showLoadingScreen() {
     if (loadingScreen) {
         loadingScreen.style.display = 'flex';
         loadingScreen.classList.remove('hidden');
+        
+        // Disable scrolling during loading
+        document.body.style.overflow = 'hidden';
+        document.documentElement.style.overflow = 'hidden';
+        
         console.log('Loading screen shown');
     } else {
         console.error('Loading screen element not found!');
@@ -1568,6 +1653,10 @@ function hideLoadingScreen() {
             if (loadingScreen.parentNode) {
                 loadingScreen.parentNode.removeChild(loadingScreen);
             }
+            
+            // Enable scrolling after loading screen is completely removed
+            document.body.style.overflow = '';
+            document.documentElement.style.overflow = '';
         }, 500); // Match the CSS transition duration
     }
 }

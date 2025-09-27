@@ -18,11 +18,32 @@
     justify-content: center;
     z-index: 99999;
     transition: opacity 0.5s ease, visibility 0.5s ease;
+    /* Block scrolling during loading */
+    pointer-events: auto;
+    overflow: hidden;
 }
 
 .loading-screen.hidden {
     opacity: 0;
     visibility: hidden;
+    pointer-events: none;
+}
+
+/* Force loading screen to be visible on all devices */
+#loading-screen {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 10000 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: #0F0F23 !important;
+    /* Block scrolling during loading */
+    pointer-events: auto !important;
+    overflow: hidden !important;
 }
 
 /* Main Content Fade-in Animation */
@@ -209,6 +230,11 @@ body {
     /* Optimize for mobile scrolling */
     -webkit-overflow-scrolling: touch;
     overflow-scrolling: touch;
+    /* Ensure smooth scrolling */
+    scroll-behavior: smooth;
+    /* Prevent double scrollbar */
+    margin: 0;
+    padding: 0;
 }
 
 .container {
@@ -1841,6 +1867,42 @@ textarea {
     .container, .section, .hero, .nav-container {
         overflow-x: hidden;
     }
+    
+    /* RTL mobile fixes */
+    [dir="rtl"] .nav-menu {
+        left: auto;
+        right: -100%;
+        transition: right 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+    }
+    
+    [dir="rtl"] .nav-menu.active {
+        left: auto;
+        right: 0;
+    }
+    
+    [dir="rtl"] .timeline-item {
+        padding-left: 0;
+        padding-right: 50px;
+    }
+    
+    [dir="rtl"] .education-timeline::before {
+        left: auto;
+        right: 20px;
+    }
+    
+    [dir="rtl"] .timeline-marker {
+        left: auto;
+        right: 15px;
+    }
+    
+    /* Prevent mobile layout jumping */
+    [dir="rtl"] body, [dir="ltr"] body {
+        transition: none !important;
+    }
+    
+    [dir="rtl"] html, [dir="ltr"] html {
+        transition: none !important;
+    }
 
     /* Hide auto scroll navigator on mobile */
     .auto-scroll-navigator {
@@ -2077,6 +2139,15 @@ body.scrolling-disabled {
     overflow: hidden;
 }
 
+/* Ensure loading screen blocks scrolling */
+body.loading {
+    overflow: hidden !important;
+}
+
+html.loading {
+    overflow: hidden !important;
+}
+
 /* Smooth transitions for specific elements only - not all elements */
 .nav-link, .btn, .skill-item, .portfolio-item, .contact-item, .trait {
     transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -2153,7 +2224,7 @@ section {
     animation: pulse 1s infinite;
 }
 
-/* RTL Support */
+/* RTL Support - Fixed to prevent jumping */
 [dir="rtl"] .hero-buttons {
     direction: rtl;
 }
@@ -2188,6 +2259,384 @@ section {
 
 [dir="rtl"] .current-section-indicator:hover {
     transform: scale(1.1) translateX(5px);
+}
+
+/* Prevent layout jumping when switching languages */
+body {
+    overflow-x: hidden;
+    position: relative;
+    /* Force scrollbar to always be on the right */
+    direction: ltr;
+}
+
+html {
+    overflow-x: hidden;
+    /* Prevent double scrollbar */
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    /* Force scrollbar to always be on the right */
+    direction: ltr;
+}
+
+/* Ensure smooth language switching */
+[dir="rtl"], [dir="ltr"] {
+    transition: none !important;
+}
+
+/* Force scrollbar to always be on the right for all languages */
+[dir="rtl"] body,
+[dir="ltr"] body {
+    direction: ltr !important;
+}
+
+[dir="rtl"] html,
+[dir="ltr"] html {
+    direction: ltr !important;
+}
+
+/* Text alignment for different languages */
+[dir="rtl"] {
+    text-align: right;
+}
+
+[dir="ltr"] {
+    text-align: left;
+}
+
+/* Force text alignment for specific elements - only text content */
+[dir="rtl"] .about-description,
+[dir="rtl"] .timeline-description,
+[dir="rtl"] .portfolio-content p,
+[dir="rtl"] .info-item span,
+[dir="rtl"] .timeline-content p {
+    text-align: right !important;
+    direction: rtl !important;
+}
+
+[dir="ltr"] .about-description,
+[dir="ltr"] .timeline-description,
+[dir="ltr"] .portfolio-content p,
+[dir="ltr"] .info-item span,
+[dir="ltr"] .timeline-content p {
+    text-align: left !important;
+    direction: ltr !important;
+}
+
+/* Specific text alignment for profile card - only text content */
+[dir="rtl"] .profile-card .card-info p,
+[dir="rtl"] .profile-card .card-content .info-item span {
+    text-align: right !important;
+    direction: rtl !important;
+}
+
+[dir="ltr"] .profile-card .card-info p,
+[dir="ltr"] .profile-card .card-content .info-item span {
+    text-align: left !important;
+    direction: ltr !important;
+}
+
+/* Force text alignment for timeline items - only text content */
+[dir="rtl"] .timeline-item .timeline-content p {
+    text-align: right !important;
+    direction: rtl !important;
+}
+
+[dir="ltr"] .timeline-item .timeline-content p {
+    text-align: left !important;
+    direction: ltr !important;
+}
+
+/* Force text alignment for portfolio items - only text content */
+[dir="rtl"] .portfolio-item .portfolio-content p {
+    text-align: right !important;
+    direction: rtl !important;
+}
+
+[dir="ltr"] .portfolio-item .portfolio-content p {
+    text-align: left !important;
+    direction: ltr !important;
+}
+
+
+/* Force text alignment for form elements - only input content */
+[dir="rtl"] .form-group input,
+[dir="rtl"] .form-group textarea {
+    text-align: right !important;
+    direction: rtl !important;
+}
+
+[dir="ltr"] .form-group input,
+[dir="ltr"] .form-group textarea {
+    text-align: left !important;
+    direction: ltr !important;
+}
+
+
+/* Keep section titles centered */
+.section-title {
+    text-align: center !important;
+}
+
+/* Keep hero content centered */
+.hero-title,
+.hero-subtitle {
+    text-align: center !important;
+}
+
+/* Keep navigation centered */
+.nav-menu {
+    text-align: center !important;
+}
+
+/* Keep footer centered */
+.footer p {
+    text-align: center !important;
+}
+
+/* Force contact items to be left-aligned */
+.contact-item {
+    text-align: left !important;
+    direction: ltr !important;
+}
+
+.contact-item h3,
+.contact-item p {
+    text-align: left !important;
+    direction: ltr !important;
+}
+
+.contact-info {
+    text-align: left !important;
+    direction: ltr !important;
+}
+
+/* Make email item clickable */
+.email-item {
+    cursor: pointer;
+}
+
+.email-item:hover {
+    opacity: 0.8;
+}
+
+/* Override RTL for contact items - keep them left-aligned */
+[dir="rtl"] .contact-item {
+    text-align: left !important;
+    direction: ltr !important;
+}
+
+[dir="rtl"] .contact-item h3,
+[dir="rtl"] .contact-item p {
+    text-align: left !important;
+    direction: ltr !important;
+}
+
+[dir="rtl"] .contact-info {
+    text-align: left !important;
+    direction: ltr !important;
+}
+
+/* Force profile title to be left-aligned */
+.profile-card .card-info p {
+    text-align: left !important;
+    direction: ltr !important;
+}
+
+[dir="rtl"] .profile-card .card-info p {
+    text-align: left !important;
+    direction: ltr !important;
+}
+
+/* Force profile card info to be left-aligned */
+.profile-card .card-info {
+    text-align: left !important;
+    direction: ltr !important;
+}
+
+[dir="rtl"] .profile-card .card-info {
+    text-align: left !important;
+    direction: ltr !important;
+}
+
+/* Force portfolio tech tags alignment */
+[dir="rtl"] .portfolio-tech {
+    text-align: right !important;
+    direction: rtl !important;
+}
+
+[dir="rtl"] .tech-tag {
+    text-align: right !important;
+    direction: rtl !important;
+}
+
+[dir="ltr"] .portfolio-tech {
+    text-align: left !important;
+    direction: ltr !important;
+}
+
+[dir="ltr"] .tech-tag {
+    text-align: left !important;
+    direction: ltr !important;
+}
+
+/* Prevent layout jumping */
+body, html {
+    transition: none !important;
+}
+
+/* Beautiful Custom Scrollbar - Always on the right */
+::-webkit-scrollbar {
+    width: 8px;
+    /* Force scrollbar to always be on the right */
+    direction: ltr;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--darker-bg);
+    border-radius: 10px;
+    /* Ensure track is always on the right */
+    direction: ltr;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+    border-radius: 10px;
+    border: 2px solid var(--darker-bg);
+    /* Ensure thumb is always on the right */
+    direction: ltr;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(45deg, var(--accent-color), var(--primary-color));
+}
+
+/* Firefox scrollbar - Always on the right */
+html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-color) var(--darker-bg);
+    /* Force scrollbar to always be on the right */
+    direction: ltr;
+}
+
+/* Smooth scrollbar transitions */
+::-webkit-scrollbar-thumb {
+    transition: all 0.3s ease;
+}
+
+/* Force scrollbar position for all languages */
+[dir="rtl"] ::-webkit-scrollbar,
+[dir="ltr"] ::-webkit-scrollbar {
+    direction: ltr !important;
+}
+
+[dir="rtl"] ::-webkit-scrollbar-track,
+[dir="ltr"] ::-webkit-scrollbar-track {
+    direction: ltr !important;
+}
+
+[dir="rtl"] ::-webkit-scrollbar-thumb,
+[dir="ltr"] ::-webkit-scrollbar-thumb {
+    direction: ltr !important;
+}
+
+/* Prevent double scrollbar */
+* {
+    box-sizing: border-box;
+}
+
+/* Ensure only one scrollbar */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    /* Force scrollbar to always be on the right */
+    direction: ltr;
+}
+
+/* Force scrollbar position for all languages */
+[dir="rtl"] body,
+[dir="ltr"] body {
+    direction: ltr !important;
+}
+
+[dir="rtl"] html,
+[dir="ltr"] html {
+    direction: ltr !important;
+}
+
+/* Hide scrollbar on mobile */
+@media (max-width: 768px) {
+    ::-webkit-scrollbar {
+        width: 4px;
+        /* Force scrollbar to always be on the right */
+        direction: ltr;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        border: 1px solid var(--darker-bg);
+        /* Force scrollbar to always be on the right */
+        direction: ltr;
+    }
+    
+    /* Hide scrollbar completely on mobile for cleaner look */
+    body {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+    
+    body::-webkit-scrollbar {
+        display: none;
+    }
+    
+    /* Force scrollbar position for all languages on mobile */
+    [dir="rtl"] ::-webkit-scrollbar,
+    [dir="ltr"] ::-webkit-scrollbar {
+        direction: ltr !important;
+    }
+    
+    [dir="rtl"] ::-webkit-scrollbar-thumb,
+    [dir="ltr"] ::-webkit-scrollbar-thumb {
+        direction: ltr !important;
+    }
+}
+
+/* Fix RTL navigation positioning */
+[dir="rtl"] .nav-menu {
+    left: auto;
+    right: -100%;
+    transition: right 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+}
+
+[dir="rtl"] .nav-menu.active {
+    left: auto;
+    right: 0;
+}
+
+/* Fix RTL layout issues */
+[dir="rtl"] .nav-menu {
+    left: auto;
+    right: -100%;
+}
+
+[dir="rtl"] .nav-menu.active {
+    left: auto;
+    right: 0;
+}
+
+[dir="rtl"] .timeline-item {
+    padding-left: 0;
+    padding-right: 80px;
+}
+
+[dir="rtl"] .education-timeline::before {
+    left: auto;
+    right: 30px;
+}
+
+[dir="rtl"] .timeline-marker {
+    left: auto;
+    right: 20px;
 }
 
 /* Animation Classes */

@@ -32,7 +32,7 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <span class="logo-text">Parsa Nikoonahad</span>
+                <span class="logo-text" data-translate="profile-name">Parsa Nikoonahad</span>
             </div>
             <div class="nav-menu" id="nav-menu">
                 <a href="#home" class="nav-link" data-section="0" data-translate="nav-home">Home</a>
@@ -140,22 +140,22 @@
                                 <i class="fas fa-user"></i>
                             </div>
                             <div class="card-info">
-                                <h3>Parsa Nikoonahad</h3>
+                                <h3 data-translate="profile-name">Parsa Nikoonahad</h3>
                                 <p data-translate="profile-title">Full Stack Developer</p>
                             </div>
                         </div>
                         <div class="card-content">
                             <div class="info-item">
                                 <i class="fas fa-map-marker-alt"></i>
-                                <span>Yazd, Iran</span>
+                                <span data-translate="profile-location">Yazd, Iran</span>
                             </div>
                             <div class="info-item">
                                 <i class="fas fa-envelope"></i>
-                                <span>parsa.nikoonahad2000@gmile.com</span>
+                                <span data-translate="profile-email">parsa.nikoonahad2000@gmail.com</span>
                             </div>
                             <div class="info-item">
                                 <i class="fas fa-phone"></i>
-                                <span>+98 919 409 7202</span>
+                                <span data-translate="profile-phone">+98 919 409 7202</span>
                             </div>
                         </div>
                     </div>
@@ -300,10 +300,10 @@
                             Responsive design with Tailwind CSS.
                         </p>
                         <div class="portfolio-tech">
-                            <span class="tech-tag">Next.js</span>
-                            <span class="tech-tag">Redux</span>
-                            <span class="tech-tag">Firebase</span>
-                            <span class="tech-tag">Tailwind CSS</span>
+                            <span class="tech-tag" data-translate="tech-nextjs">Next.js</span>
+                            <span class="tech-tag" data-translate="tech-redux">Redux</span>
+                            <span class="tech-tag" data-translate="tech-firebase">Firebase</span>
+                            <span class="tech-tag" data-translate="tech-tailwind">Tailwind CSS</span>
                         </div>
                         <a href="#" class="btn btn-primary" data-translate="project-view">View Project</a>
                     </div>
@@ -327,10 +327,10 @@
                             Responsive design with Tailwind CSS.
                         </p>
                         <div class="portfolio-tech">
-                            <span class="tech-tag">React.js</span>
-                            <span class="tech-tag">TypeScript</span>
-                            <span class="tech-tag">React Router</span>
-                            <span class="tech-tag">Tailwind CSS</span>
+                            <span class="tech-tag" data-translate="tech-react">React.js</span>
+                            <span class="tech-tag" data-translate="tech-typescript">TypeScript</span>
+                            <span class="tech-tag" data-translate="tech-router">React Router</span>
+                            <span class="tech-tag" data-translate="tech-tailwind">Tailwind CSS</span>
                         </div>
                         <a href="#" class="btn btn-primary" data-translate="project-view">View Project</a>
                     </div>
@@ -345,11 +345,16 @@
             <h2 class="section-title" data-translate="contact-title">Get In Touch</h2>
             <div class="contact-content">
                 <div class="contact-info">
-                    <div class="contact-item">
+                    <div class="contact-item email-item" data-email="parsa.nikoonahad2000@gmail.com">
                         <i class="fas fa-envelope"></i>
                         <div>
                             <h3 data-translate="contact-email">Email</h3>
-                            <p>parsa.nikoonahad2000@gmail.com</p>
+                            <p class="email-address">parsa.nikoonahad2000@gmail.com</p>
+                        </div>
+                        <div class="contact-actions">
+                            <button class="email-btn" title="Send Email">
+                                <i class="fas fa-envelope"></i>
+                            </button>
                         </div>
                     </div>
                     <div class="contact-item phone-item" data-phone="+989194097202">
