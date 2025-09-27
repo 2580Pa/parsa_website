@@ -2485,6 +2485,51 @@ body, html {
     transition: none !important;
 }
 
+/* Simple smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Force scroll to work */
+body {
+    overflow-x: hidden;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+}
+
+/* Ensure sections are scrollable */
+section {
+    position: relative;
+    z-index: 1;
+}
+
+/* Remove any scroll blocking */
+* {
+    scroll-behavior: smooth;
+}
+
+/* Fix scroll issues */
+html, body {
+    height: auto;
+    min-height: 100%;
+}
+
+/* Ensure main content is scrollable */
+.main-content {
+    overflow: visible;
+    position: relative;
+}
+
+/* Navigation link hover effects */
+.nav-link {
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--primary-color);
+}
+
 /* Beautiful Custom Scrollbar - Always on the right */
 ::-webkit-scrollbar {
     width: 8px;

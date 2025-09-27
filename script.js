@@ -574,27 +574,6 @@ function showNotification(message, type) {
 }
 
 // Initialize smooth scrolling
-function initSmoothScrolling() {
-    const links = document.querySelectorAll('a[href^="#"]');
-    
-    links.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            const targetId = this.getAttribute('href');
-            const targetSection = document.querySelector(targetId);
-            
-            if (targetSection) {
-                const offsetTop = targetSection.offsetTop - 70; // Account for fixed navbar
-                
-                window.scrollTo({
-                    top: offsetTop,
-                    behavior: 'smooth'
-                });
-            }
-        });
-    });
-}
 
 // Initialize typing animation
 function initTypingAnimation() {
@@ -677,6 +656,11 @@ function initSections() {
         document.getElementById('portfolio'),
         document.getElementById('contact')
     ];
+    
+    console.log('Sections initialized:', sections.length);
+    sections.forEach((section, index) => {
+        console.log(`Section ${index}:`, section ? section.id : 'null');
+    });
 }
 
 // Initialize auto scroll functionality - Simplified for mobile performance
@@ -802,8 +786,12 @@ function perfectLinearScroll(target, duration) {
         const timeElapsed = currentTime - startTime;
         const progress = Math.min(timeElapsed / duration, 1);
         
-        // Perfect linear progression - no easing curves
-        const currentPosition = start + distance * progress;
+        // Smooth easing function for better animation
+        const easeInOutCubic = progress < 0.5 
+            ? 4 * progress * progress * progress 
+            : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+        
+        const currentPosition = start + distance * easeInOutCubic;
         window.scrollTo(0, currentPosition);
         
         if (timeElapsed < duration) {
@@ -814,61 +802,52 @@ function perfectLinearScroll(target, duration) {
     requestAnimationFrame(animation);
 }
 
-// Scroll to specific section - Ultra smooth
+// Scroll to specific section - Simple and working
 function scrollToSection(sectionIndex) {
-    if (isScrolling || sectionIndex < 0 || sectionIndex >= sections.length) return;
-    
-    isScrolling = true;
-    autoScrollTriggered = false;
-    const previousSection = currentSection;
-    currentSection = sectionIndex;
+    if (sectionIndex < 0 || sectionIndex >= sections.length) return;
     
     const targetSection = sections[sectionIndex];
     const offsetTop = targetSection.offsetTop - 70; // Account for fixed navbar
     
-    // Update active states immediately
+    // Update current section
+    currentSection = sectionIndex;
+    
+    // Update active states
     updateActiveStates();
     
-    // Perfect linear scroll
-    perfectLinearScroll(offsetTop, 1000);
-    
-    // Reset scrolling flag
-    setTimeout(() => {
-        isScrolling = false;
-    }, 1000);
+    // Simple smooth scroll
+    window.scrollTo({
+        top: offsetTop,
+        behavior: 'smooth'
+    });
 }
 
 
-// Scroll to next section with smooth transition
+// Scroll to next section
 function scrollToNextSection() {
     if (currentSection < sections.length - 1) {
-        // Add smooth transition effect
-        addSectionTransitionEffect(currentSection + 1);
         scrollToSection(currentSection + 1);
     }
 }
 
-// Scroll to previous section with smooth transition
+// Scroll to previous section
 function scrollToPrevSection() {
     if (currentSection > 0) {
-        // Add smooth transition effect
-        addSectionTransitionEffect(currentSection - 1);
         scrollToSection(currentSection - 1);
     }
 }
 
-// Add smooth transition effect between sections
+// Simple section transition effect
 function addSectionTransitionEffect(targetSectionIndex) {
     const targetSection = sections[targetSectionIndex];
     if (targetSection) {
-        // Add fade in effect
-        targetSection.style.opacity = '0';
-        targetSection.style.transform = 'translateY(20px)';
-        targetSection.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+        // Simple fade in effect
+        targetSection.style.opacity = '0.8';
+        targetSection.style.transition = 'opacity 0.3s ease';
         
+        // Reset opacity
         setTimeout(() => {
             targetSection.style.opacity = '1';
-            targetSection.style.transform = 'translateY(0)';
         }, 100);
     }
 }
@@ -881,7 +860,7 @@ function smoothScrollTo(target, duration, easing) {
     
     // Professional easing functions
     function easeInOutCubic(t) {
-        return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+        return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
     }
     
     function easeOutQuart(t) {
@@ -985,6 +964,8 @@ function smoothScrollTo(target, duration, easing) {
 
 // Update active states with smooth animations
 function updateActiveStates() {
+    console.log('Updating active states, current section:', currentSection);
+    
     // Update navigation links
     const navLinks = document.querySelectorAll('.nav-link');
     navLinks.forEach((link, index) => {
@@ -1042,9 +1023,11 @@ function updateCurrentSection() {
     });
 }
 
-// Enhanced smooth scrolling for regular links
+// Working smooth scrolling for navigation links
 function initSmoothScrolling() {
+    console.log('Initializing smooth scrolling...');
     const links = document.querySelectorAll('a[href^="#"]');
+    console.log('Found links:', links.length);
     
     links.forEach(link => {
         link.addEventListener('click', function(e) {
@@ -1053,11 +1036,40 @@ function initSmoothScrolling() {
             const targetId = this.getAttribute('href');
             const targetSection = document.querySelector(targetId);
             
+            console.log('Clicked link:', targetId);
+            console.log('Target section:', targetSection);
+            
             if (targetSection) {
+                console.log('Section found, scrolling...');
+                
+                // Close mobile menu if open
+                if (navMenu && navMenu.classList.contains('active')) {
+                    navMenu.classList.remove('active');
+                }
+                
+                // Simple and reliable scroll method
+                console.log('Using simple scroll method');
+                
+                // Calculate target position
+                const targetPosition = targetSection.offsetTop - 80;
+                
+                console.log('Section top:', targetSection.offsetTop);
+                console.log('Target position:', targetPosition);
+                
+                // Simple scroll - just set the scroll position
+                document.documentElement.scrollTop = targetPosition;
+                document.body.scrollTop = targetPosition;
+                
+                console.log('Simple scroll executed');
+                
+                // Update current section
                 const sectionIndex = sections.indexOf(targetSection);
                 if (sectionIndex !== -1) {
-                    scrollToSection(sectionIndex);
+                    currentSection = sectionIndex;
+                    updateActiveStates();
                 }
+            } else {
+                console.log('Section not found!');
             }
         });
     });
