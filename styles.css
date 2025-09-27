@@ -1011,19 +1011,6 @@ section {
     transform: scale(1.05);
 }
 
-.contact-actions {
-    display: flex;
-    gap: 8px;
-    margin-top: 10px;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: all 0.3s linear;
-}
-
-.phone-item:hover .contact-actions {
-    opacity: 1;
-    transform: translateY(0);
-}
 
 .copy-btn, .call-btn, .telegram-btn, .instagram-btn {
     background: rgba(139, 92, 246, 0.2);
@@ -1455,23 +1442,10 @@ textarea {
         gap: 2rem;
     }
     
-    .contact-actions {
-        opacity: 1;
-        transform: translateY(0);
-        margin-top: 8px;
-    }
-    
     .copy-btn, .call-btn, .telegram-btn, .instagram-btn {
         min-width: 35px;
         height: 35px;
         font-size: 0.8rem;
-    }
-    
-    .telegram-item .contact-actions,
-    .instagram-item .contact-actions {
-        opacity: 1;
-        transform: translateY(0);
-        margin-top: 8px;
     }
 
     .about-traits {
@@ -1778,13 +1752,6 @@ textarea {
         font-size: 0.8rem;
     }
     
-    .telegram-item .contact-actions,
-    .instagram-item .contact-actions {
-        opacity: 1;
-        transform: translateY(0);
-        margin-top: 8px;
-        justify-content: center;
-    }
     
     /* Buttons responsive */
     .btn {

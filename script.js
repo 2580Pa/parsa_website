@@ -458,22 +458,13 @@ function initEmailFunctionality() {
     const emailItems = document.querySelectorAll('.email-item');
     
     emailItems.forEach(item => {
-        const emailBtn = item.querySelector('.email-btn');
         const emailAddress = item.getAttribute('data-email');
-        
-        if (emailBtn && emailAddress) {
-            emailBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                openEmailClient(emailAddress);
-            });
-        }
         
         // Make the entire email item clickable
         item.addEventListener('click', (e) => {
-            if (!e.target.closest('.contact-actions')) {
-                openEmailClient(emailAddress);
-            }
+            e.preventDefault();
+            e.stopPropagation();
+            openEmailClient(emailAddress);
         });
         
         // Add hover effect
