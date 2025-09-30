@@ -602,39 +602,28 @@ function typeText(element, text, speed) {
     }, speed);
 }
 
-// Combined scroll effects for better performance
-let scrollTimeout;
+// Navbar scroll effect (like backup)
 window.addEventListener('scroll', function() {
-    // Throttle scroll events for better performance
-    if (scrollTimeout) {
-        return;
+    const navbar = document.querySelector('.navbar');
+    const scrolled = window.pageYOffset;
+    if (navbar) {
+        if (scrolled > 100) {
+            navbar.style.background = 'rgba(15, 15, 35, 0.98)';
+            navbar.style.backdropFilter = 'blur(15px)';
+        } else {
+            navbar.style.background = 'rgba(15, 15, 35, 0.95)';
+            navbar.style.backdropFilter = 'blur(10px)';
+        }
     }
-    
-    scrollTimeout = setTimeout(() => {
-        const navbar = document.querySelector('.navbar');
-        const scrolled = window.pageYOffset;
-        
-        // Navbar effect
-        if (navbar) {
-            if (scrolled > 100) {
-                navbar.style.background = 'rgba(15, 15, 35, 0.98)';
-                navbar.style.backdropFilter = 'blur(15px)';
-            } else {
-                navbar.style.background = 'rgba(15, 15, 35, 0.95)';
-                navbar.style.backdropFilter = 'blur(10px)';
-            }
-        }
-        
-        // Parallax effect - only on desktop for performance
-        if (window.innerWidth > 768) {
-            const heroBackground = document.querySelector('.hero-background');
-            if (heroBackground) {
-                heroBackground.style.transform = `translateY(${scrolled * 0.5}px)`;
-            }
-        }
-        
-        scrollTimeout = null;
-    }, 16); // ~60fps
+});
+
+// Parallax effect for hero background (exactly like backup)
+window.addEventListener('scroll', function() {
+    const scrolled = window.pageYOffset;
+    const heroBackground = document.querySelector('.hero-background');
+    if (heroBackground) {
+        heroBackground.style.transform = `translateY(${scrolled * 0.5}px)`;
+    }
 });
 
 // Initialize sections
