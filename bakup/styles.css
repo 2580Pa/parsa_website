@@ -5,200 +5,6 @@
     box-sizing: border-box;
 }
 
-/* Loading Screen Styles */
-.loading-screen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: #0F0F23;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 99999;
-    transition: opacity 0.5s ease, visibility 0.5s ease;
-    /* Block scrolling during loading */
-    pointer-events: auto;
-    overflow: hidden;
-}
-
-.loading-screen.hidden {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-}
-
-/* Force loading screen to be visible on all devices */
-#loading-screen {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    z-index: 10000 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    background: #0F0F23 !important;
-    /* Block scrolling during loading */
-    pointer-events: auto !important;
-    overflow: hidden !important;
-}
-
-/* Main Content Fade-in Animation */
-.main-content {
-    opacity: 0;
-    transition: opacity 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    will-change: opacity;
-}
-
-.main-content.fade-in {
-    opacity: 1;
-}
-
-/* Smooth site entrance animation */
-@keyframes siteFadeIn {
-    0% {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.main-content.site-entrance {
-    animation: siteFadeIn 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-}
-
-/* Enhanced slideInUp animation for hero elements */
-@keyframes slideInUp {
-    0% {
-        opacity: 0;
-        transform: translateY(30px);
-        visibility: visible;
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-        visibility: visible;
-    }
-}
-
-/* From Uiverse.io by dexter-st */ 
-.loader-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 180px;
-    height: 180px;
-    font-family: "Inter", sans-serif;
-    font-size: 1.2em;
-    font-weight: 300;
-    color: white;
-    border-radius: 50%;
-    background-color: transparent;
-    user-select: none;
-    direction: ltr !important;
-    text-align: center !important;
-}
-
-.loader {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    border-radius: 50%;
-    background-color: transparent;
-    animation: loader-rotate 2s linear infinite;
-    z-index: 0;
-}
-
-@keyframes loader-rotate {
-    0% {
-        transform: rotate(90deg);
-        box-shadow:
-            0 10px 20px 0 #fff inset,
-            0 20px 30px 0 #ad5fff inset,
-            0 60px 60px 0 #471eec inset;
-    }
-    50% {
-        transform: rotate(270deg);
-        box-shadow:
-            0 10px 20px 0 #fff inset,
-            0 20px 10px 0 #d60a47 inset,
-            0 40px 60px 0 #311e80 inset;
-    }
-    100% {
-        transform: rotate(450deg);
-        box-shadow:
-            0 10px 20px 0 #fff inset,
-            0 20px 30px 0 #ad5fff inset,
-            0 60px 60px 0 #471eec inset;
-    }
-}
-
-.loader-letter {
-    display: inline-block;
-    opacity: 0.4;
-    transform: translateY(0);
-    animation: loader-letter-anim 2s infinite;
-    z-index: 1;
-    border-radius: 50ch;
-    border: none;
-}
-
-.loader-letter:nth-child(1) {
-    animation-delay: 0s;
-}
-.loader-letter:nth-child(2) {
-    animation-delay: 0.1s;
-}
-.loader-letter:nth-child(3) {
-    animation-delay: 0.2s;
-}
-.loader-letter:nth-child(4) {
-    animation-delay: 0.3s;
-}
-.loader-letter:nth-child(5) {
-    animation-delay: 0.4s;
-}
-.loader-letter:nth-child(6) {
-    animation-delay: 0.5s;
-}
-.loader-letter:nth-child(7) {
-    animation-delay: 0.6s;
-}
-.loader-letter:nth-child(8) {
-    animation-delay: 0.7s;
-}
-.loader-letter:nth-child(9) {
-    animation-delay: 0.8s;
-}
-.loader-letter:nth-child(10) {
-    animation-delay: 0.9s;
-}
-
-@keyframes loader-letter-anim {
-    0%,
-    100% {
-        opacity: 0.4;
-        transform: translateY(0);
-    }
-    20% {
-        opacity: 1;
-        transform: scale(1.15);
-    }
-    40% {
-        opacity: 0.7;
-        transform: translateY(0);
-    }
-}
-
 :root {
     --primary-color: #8B5CF6;
     --secondary-color: #A855F7;
@@ -216,9 +22,6 @@
 
 html {
     scroll-behavior: smooth;
-    /* Optimize for mobile scrolling */
-    -webkit-overflow-scrolling: touch;
-    overflow-scrolling: touch;
 }
 
 body {
@@ -227,14 +30,6 @@ body {
     color: var(--text-primary);
     line-height: 1.6;
     overflow-x: hidden;
-    /* Optimize for mobile scrolling */
-    -webkit-overflow-scrolling: touch;
-    overflow-scrolling: touch;
-    /* Ensure smooth scrolling */
-    scroll-behavior: smooth;
-    /* Prevent double scrollbar */
-    margin: 0;
-    padding: 0;
 }
 
 .container {
@@ -332,24 +127,11 @@ body {
     cursor: pointer;
     font-weight: 600;
     transition: all 0.3s ease;
-    position: relative;
-    z-index: 1000;
-    pointer-events: auto;
-    user-select: none;
 }
 
 .lang-btn:hover {
     transform: translateY(-2px);
     box-shadow: var(--shadow-primary);
-}
-
-.lang-btn:focus {
-    outline: 2px solid var(--primary-color);
-    outline-offset: 2px;
-}
-
-.lang-btn:active {
-    transform: translateY(0);
 }
 
 /* Hero Section */
@@ -369,7 +151,6 @@ body {
     width: 100%;
     height: 100%;
     z-index: -1;
-    will-change: transform;
 }
 
 .stars {
@@ -456,17 +237,11 @@ body {
 
 .title-line {
     display: block;
-    opacity: 0;
-    transform: translateY(30px);
-    visibility: hidden;
-    /* Animation will be triggered by JavaScript after loading screen */
-}
-
-.title-line:nth-child(1) {
-    /* Animation delay will be set by JavaScript */
+    animation: slideInUp 1s ease-out;
 }
 
 .title-line:nth-child(2) {
+    animation-delay: 0.3s;
     background: var(--gradient-primary);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -482,10 +257,7 @@ body {
 
 .subtitle-line {
     display: block;
-    opacity: 0;
-    transform: translateY(30px);
-    visibility: hidden;
-    /* Animation will be triggered by JavaScript after loading screen */
+    animation: slideInUp 1s ease-out 0.6s both;
 }
 
 .hero-buttons {
@@ -493,10 +265,7 @@ body {
     gap: 1rem;
     justify-content: center;
     flex-wrap: wrap;
-    opacity: 0;
-    transform: translateY(30px);
-    visibility: hidden;
-    /* Animation will be triggered by JavaScript after loading screen */
+    animation: slideInUp 1s ease-out 0.9s both;
 }
 
 .btn {
@@ -1012,6 +781,19 @@ section {
     transform: scale(1.05);
 }
 
+.contact-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s linear;
+}
+
+.phone-item:hover .contact-actions {
+    opacity: 1;
+    transform: translateY(0);
+}
 
 .copy-btn, .call-btn, .telegram-btn, .instagram-btn {
     background: rgba(139, 92, 246, 0.2);
@@ -1264,44 +1046,8 @@ textarea {
     color: var(--text-muted);
 }
 
-/* Mobile Performance Optimizations */
+/* Responsive Design */
 @media (max-width: 768px) {
-    /* Optimize scroll performance */
-    body {
-        -webkit-overflow-scrolling: touch;
-        overflow-scrolling: touch;
-        overflow-x: hidden;
-    }
-    
-    /* Ensure proper viewport */
-    html {
-        overflow-x: hidden;
-    }
-    
-    /* Container responsive */
-    .container {
-        max-width: 100%;
-        padding: 0 1rem;
-        margin: 0 auto;
-    }
-    
-    /* Reduce animations on mobile for better performance */
-    .floating-icons i {
-        animation: none;
-    }
-    
-    .stars {
-        animation: none;
-    }
-    
-    .mountains {
-        animation: none;
-    }
-    
-    /* Simplify transitions on mobile */
-    .nav-link, .btn, .skill-item, .portfolio-item, .contact-item, .trait {
-        transition: transform 0.2s ease, opacity 0.2s ease;
-    }
     .nav-menu {
         position: fixed;
         left: -100%;
@@ -1310,27 +1056,17 @@ textarea {
         background-color: var(--darker-bg);
         width: 100%;
         text-align: center;
-        transition: left 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
-        box-shadow: 0 10px 27px rgba(0, 0, 0, 0.3);
+        transition: 0.3s;
+        box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
         padding: 2rem 0;
-        z-index: 1000;
-        height: calc(100vh - 70px);
-        overflow-y: auto;
-        opacity: 0;
-        visibility: hidden;
     }
 
     .nav-menu.active {
         left: 0;
-        opacity: 1;
-        visibility: visible;
     }
 
     .nav-toggle {
         display: flex;
-        z-index: 1001;
-        cursor: pointer;
-        position: relative;
     }
 
     .nav-toggle.active .bar:nth-child(2) {
@@ -1343,74 +1079,6 @@ textarea {
 
     .nav-toggle.active .bar:nth-child(3) {
         transform: translateY(-8px) rotate(-45deg);
-    }
-    
-    /* Ensure hamburger menu works properly */
-    .nav-toggle .bar {
-        width: 25px;
-        height: 3px;
-        background: var(--text-primary);
-        margin: 3px 0;
-        transition: 0.3s;
-        display: block;
-    }
-    
-    /* Remove overlay - use JavaScript instead */
-    
-    .nav-link {
-        padding: 1rem 0;
-        font-size: 1.1rem;
-        border-bottom: 1px solid rgba(139, 92, 246, 0.1);
-        display: block;
-        width: 100%;
-        text-decoration: none;
-        color: var(--text-primary);
-        transition: color 0.3s ease;
-    }
-    
-    .nav-link:hover {
-        color: var(--primary-color);
-    }
-    
-    .nav-link:last-child {
-        border-bottom: none;
-    }
-    
-    /* Language button styling */
-    .language-switcher {
-        margin-left: 0;
-        margin-top: 1rem;
-        position: relative;
-        z-index: 1002;
-    }
-    
-    .lang-btn {
-        background: var(--gradient-primary);
-        border: none;
-        color: white;
-        padding: 8px 16px;
-        border-radius: 20px;
-        cursor: pointer;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        font-size: 0.9rem;
-        position: relative;
-        z-index: 1002;
-        pointer-events: auto;
-    }
-    
-    .lang-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-primary);
-    }
-    
-    .lang-btn:active {
-        transform: translateY(0);
-    }
-    
-    .lang-btn:focus {
-        outline: 2px solid var(--primary-color);
-        outline-offset: 2px;
     }
 
     .hero-title {
@@ -1443,10 +1111,23 @@ textarea {
         gap: 2rem;
     }
     
+    .contact-actions {
+        opacity: 1;
+        transform: translateY(0);
+        margin-top: 8px;
+    }
+    
     .copy-btn, .call-btn, .telegram-btn, .instagram-btn {
         min-width: 35px;
         height: 35px;
         font-size: 0.8rem;
+    }
+    
+    .telegram-item .contact-actions,
+    .instagram-item .contact-actions {
+        opacity: 1;
+        transform: translateY(0);
+        margin-top: 8px;
     }
 
     .about-traits {
@@ -1464,421 +1145,9 @@ textarea {
     .timeline-marker {
         left: 10px;
     }
-    
-    /* Navigation responsive fixes */
-    .nav-container {
-        padding: 0 1rem;
-        max-width: 100%;
-    }
-    
-    .nav-brand {
-        font-size: 1.2rem;
-    }
-    
-    .nav-menu {
-        position: fixed;
-        left: -100%;
-        top: 70px;
-        flex-direction: column;
-        background-color: var(--darker-bg);
-        width: 100%;
-        text-align: center;
-        transition: left 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
-        box-shadow: 0 10px 27px rgba(0, 0, 0, 0.3);
-        padding: 2rem 0;
-        z-index: 1000;
-        height: calc(100vh - 70px);
-        overflow-y: auto;
-        opacity: 0;
-        visibility: hidden;
-    }
-    
-    .nav-menu.active {
-        left: 0;
-        opacity: 1;
-        visibility: visible;
-    }
-    
-    .nav-toggle {
-        display: flex;
-        z-index: 1001;
-        cursor: pointer;
-        position: relative;
-    }
-    
-    .nav-toggle .bar {
-        width: 25px;
-        height: 3px;
-        background: var(--text-primary);
-        margin: 3px 0;
-        transition: 0.3s;
-        display: block;
-    }
-    
-    .nav-toggle.active .bar:nth-child(2) {
-        opacity: 0;
-    }
-    
-    .nav-toggle.active .bar:nth-child(1) {
-        transform: translateY(8px) rotate(45deg);
-    }
-    
-    .nav-toggle.active .bar:nth-child(3) {
-        transform: translateY(-8px) rotate(-45deg);
-    }
-    
-    .nav-link {
-        padding: 1rem 0;
-        font-size: 1.1rem;
-        border-bottom: 1px solid rgba(139, 92, 246, 0.1);
-        display: block;
-        width: 100%;
-        text-decoration: none;
-        color: var(--text-primary);
-        transition: color 0.3s ease;
-    }
-    
-    .nav-link:hover {
-        color: var(--primary-color);
-    }
-    
-    .nav-link:last-child {
-        border-bottom: none;
-    }
-    
-    /* Language button styling */
-    .language-switcher {
-        margin-left: 0;
-        margin-top: 1rem;
-        position: relative;
-        z-index: 1002;
-    }
-    
-    .lang-btn {
-        background: var(--gradient-primary);
-        border: none;
-        color: white;
-        padding: 8px 16px;
-        border-radius: 20px;
-        cursor: pointer;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        font-size: 0.9rem;
-        position: relative;
-        z-index: 1002;
-        pointer-events: auto;
-    }
-    
-    .lang-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-primary);
-    }
-    
-    .lang-btn:active {
-        transform: translateY(0);
-    }
-    
-    .lang-btn:focus {
-        outline: 2px solid var(--primary-color);
-        outline-offset: 2px;
-    }
-    
-    /* Hero section responsive */
-    .hero {
-        height: 100vh;
-        padding: 0 1rem;
-    }
-    
-    .hero-content {
-        padding: 0 1rem;
-        text-align: center;
-        max-width: 100%;
-    }
-    
-    .hero-title {
-        font-size: 2rem;
-        line-height: 1.2;
-        margin-bottom: 1rem;
-    }
-    
-    .hero-subtitle {
-        font-size: 1.2rem;
-        margin-bottom: 1rem;
-    }
-    
-    .hero-description {
-        font-size: 0.9rem;
-        margin-bottom: 2rem;
-        line-height: 1.6;
-    }
-    
-    /* Sections responsive */
-    .section {
-        padding: 3rem 1rem;
-        max-width: 100%;
-    }
-    
-    .section-title {
-        font-size: 2rem;
-        margin-bottom: 1rem;
-        text-align: center;
-    }
-    
-    .section-subtitle {
-        font-size: 1rem;
-        margin-bottom: 2rem;
-        text-align: center;
-    }
-    
-    /* About section responsive */
-    .about-content {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-        max-width: 100%;
-    }
-    
-    .about-text {
-        font-size: 0.9rem;
-        line-height: 1.6;
-        text-align: center;
-    }
-    
-    .about-traits {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-    }
-    
-    /* Skills section responsive */
-    .skills-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-        max-width: 100%;
-    }
-    
-    .skill-items {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
-    }
-    
-    .skill-item {
-        padding: 1rem;
-        font-size: 0.9rem;
-        text-align: center;
-    }
-    
-    /* Portfolio section responsive */
-    .portfolio-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-        max-width: 100%;
-    }
-    
-    .portfolio-item {
-        padding: 1.5rem;
-        text-align: center;
-    }
-    
-    .portfolio-item h3 {
-        font-size: 1.2rem;
-        margin-bottom: 0.5rem;
-    }
-    
-    .portfolio-item p {
-        font-size: 0.9rem;
-        margin-bottom: 1rem;
-    }
-    
-    .portfolio-item ul {
-        font-size: 0.8rem;
-        margin-bottom: 1rem;
-        text-align: left;
-    }
-    
-    /* Education section responsive */
-    .education-timeline {
-        padding-left: 0;
-    }
-    
-    .timeline-item {
-        padding-left: 50px;
-        margin-bottom: 1.5rem;
-    }
-    
-    .timeline-marker {
-        left: 15px;
-        width: 10px;
-        height: 10px;
-    }
-    
-    .timeline-content h3 {
-        font-size: 1.1rem;
-    }
-    
-    .timeline-content p {
-        font-size: 0.9rem;
-    }
-    
-    /* Contact section responsive */
-    .contact-content {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-        max-width: 100%;
-    }
-    
-    .contact-item {
-        padding: 1rem;
-        text-align: center;
-    }
-    
-    .contact-item h3 {
-        font-size: 1.1rem;
-        margin-bottom: 0.5rem;
-    }
-    
-    .contact-item p {
-        font-size: 0.9rem;
-        margin-bottom: 1rem;
-    }
-    
-    .contact-actions {
-        opacity: 1;
-        transform: translateY(0);
-        margin-top: 8px;
-        justify-content: center;
-    }
-    
-    .copy-btn, .call-btn, .telegram-btn, .instagram-btn {
-        min-width: 35px;
-        height: 35px;
-        font-size: 0.8rem;
-    }
-    
-    
-    /* Buttons responsive */
-    .btn {
-        padding: 0.8rem 1.5rem;
-        font-size: 0.9rem;
-    }
-    
-    .btn-primary {
-        width: 100%;
-        margin-bottom: 1rem;
-    }
-    
-    /* Form responsive */
-    .contact-form {
-        max-width: 100%;
-        padding: 0 1rem;
-    }
-    
-    .form-group {
-        margin-bottom: 1rem;
-    }
-    
-    .form-group input,
-    .form-group textarea {
-        padding: 0.8rem;
-        font-size: 0.9rem;
-        width: 100%;
-        box-sizing: border-box;
-    }
-    
-    .form-group textarea {
-        min-height: 120px;
-    }
-    
-    /* Footer responsive */
-    .footer {
-        padding: 2rem 1rem;
-        text-align: center;
-        max-width: 100%;
-    }
-    
-    .footer-content {
-        flex-direction: column;
-        gap: 1rem;
-        max-width: 100%;
-    }
-    
-    .social-links {
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-    
-    .social-links a {
-        margin: 0.5rem;
-    }
-    
-    /* Loading screen responsive */
-    .loading-screen {
-        padding: 1rem;
-        max-width: 100%;
-    }
-    
-    .loading-text {
-        font-size: 1.2rem;
-        text-align: center;
-    }
-    
-    .loading-spinner {
-        width: 40px;
-        height: 40px;
-    }
-    
-    /* Ensure all elements are responsive */
-    * {
-        max-width: 100%;
-        box-sizing: border-box;
-    }
-    
-    /* Fix any overflow issues */
-    .container, .section, .hero, .nav-container {
-        overflow-x: hidden;
-    }
-    
-    /* RTL mobile fixes */
-    [dir="rtl"] .nav-menu {
-        left: auto;
-        right: -100%;
-        transition: right 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
-    }
-    
-    [dir="rtl"] .nav-menu.active {
-        left: auto;
-        right: 0;
-    }
-    
-    [dir="rtl"] .timeline-item {
-        padding-left: 0;
-        padding-right: 50px;
-    }
-    
-    [dir="rtl"] .education-timeline::before {
-        left: auto;
-        right: 20px;
-    }
-    
-    [dir="rtl"] .timeline-marker {
-        left: auto;
-        right: 15px;
-    }
-    
-    /* Prevent mobile layout jumping */
-    [dir="rtl"] body, [dir="ltr"] body {
-        transition: none !important;
-    }
-    
-    [dir="rtl"] html, [dir="ltr"] html {
-        transition: none !important;
-    }
 
     /* Hide auto scroll navigator on mobile */
     .auto-scroll-navigator {
-        display: none !important;
-    }
-    
-    /* Hide scroll progress on mobile for better performance */
-    .scroll-progress {
         display: none;
     }
 }
@@ -2107,17 +1376,8 @@ body.scrolling-disabled {
     overflow: hidden;
 }
 
-/* Ensure loading screen blocks scrolling */
-body.loading {
-    overflow: hidden !important;
-}
-
-html.loading {
-    overflow: hidden !important;
-}
-
-/* Smooth transitions for specific elements only - not all elements */
-.nav-link, .btn, .skill-item, .portfolio-item, .contact-item, .trait {
+/* Smooth transitions for all elements */
+* {
     transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
@@ -2138,9 +1398,9 @@ section {
     overflow-x: hidden;
 }
 
-/* Remove section transitions for better mobile performance */
+/* Simple section transitions */
 section {
-    /* No transitions on sections for better mobile scroll performance */
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 /* Enhanced Hero Scroll Indicator */
@@ -2192,7 +1452,7 @@ section {
     animation: pulse 1s infinite;
 }
 
-/* RTL Support - Fixed to prevent jumping */
+/* RTL Support */
 [dir="rtl"] .hero-buttons {
     direction: rtl;
 }
@@ -2227,429 +1487,6 @@ section {
 
 [dir="rtl"] .current-section-indicator:hover {
     transform: scale(1.1) translateX(5px);
-}
-
-/* Prevent layout jumping when switching languages */
-body {
-    overflow-x: hidden;
-    position: relative;
-    /* Force scrollbar to always be on the right */
-    direction: ltr;
-}
-
-html {
-    overflow-x: hidden;
-    /* Prevent double scrollbar */
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    /* Force scrollbar to always be on the right */
-    direction: ltr;
-}
-
-/* Ensure smooth language switching */
-[dir="rtl"], [dir="ltr"] {
-    transition: none !important;
-}
-
-/* Force scrollbar to always be on the right for all languages */
-[dir="rtl"] body,
-[dir="ltr"] body {
-    direction: ltr !important;
-}
-
-[dir="rtl"] html,
-[dir="ltr"] html {
-    direction: ltr !important;
-}
-
-/* Text alignment for different languages */
-[dir="rtl"] {
-    text-align: right;
-}
-
-[dir="ltr"] {
-    text-align: left;
-}
-
-/* Force text alignment for specific elements - only text content */
-[dir="rtl"] .about-description,
-[dir="rtl"] .timeline-description,
-[dir="rtl"] .portfolio-content p,
-[dir="rtl"] .info-item span,
-[dir="rtl"] .timeline-content p {
-    text-align: right !important;
-    direction: rtl !important;
-}
-
-[dir="ltr"] .about-description,
-[dir="ltr"] .timeline-description,
-[dir="ltr"] .portfolio-content p,
-[dir="ltr"] .info-item span,
-[dir="ltr"] .timeline-content p {
-    text-align: left !important;
-    direction: ltr !important;
-}
-
-/* Specific text alignment for profile card - only text content */
-[dir="rtl"] .profile-card .card-info p,
-[dir="rtl"] .profile-card .card-content .info-item span {
-    text-align: right !important;
-    direction: rtl !important;
-}
-
-[dir="ltr"] .profile-card .card-info p,
-[dir="ltr"] .profile-card .card-content .info-item span {
-    text-align: left !important;
-    direction: ltr !important;
-}
-
-/* Force text alignment for timeline items - only text content */
-[dir="rtl"] .timeline-item .timeline-content p {
-    text-align: right !important;
-    direction: rtl !important;
-}
-
-[dir="ltr"] .timeline-item .timeline-content p {
-    text-align: left !important;
-    direction: ltr !important;
-}
-
-/* Force text alignment for portfolio items - only text content */
-[dir="rtl"] .portfolio-item .portfolio-content p {
-    text-align: right !important;
-    direction: rtl !important;
-}
-
-[dir="ltr"] .portfolio-item .portfolio-content p {
-    text-align: left !important;
-    direction: ltr !important;
-}
-
-
-/* Force text alignment for form elements - only input content */
-[dir="rtl"] .form-group input,
-[dir="rtl"] .form-group textarea {
-    text-align: right !important;
-    direction: rtl !important;
-}
-
-[dir="ltr"] .form-group input,
-[dir="ltr"] .form-group textarea {
-    text-align: left !important;
-    direction: ltr !important;
-}
-
-
-/* Keep section titles centered */
-.section-title {
-    text-align: center !important;
-}
-
-/* Keep hero content centered */
-.hero-title,
-.hero-subtitle {
-    text-align: center !important;
-}
-
-/* Keep navigation centered */
-.nav-menu {
-    text-align: center !important;
-}
-
-/* Keep footer centered */
-.footer p {
-    text-align: center !important;
-}
-
-/* Force contact items to be left-aligned */
-.contact-item {
-    text-align: left !important;
-    direction: ltr !important;
-}
-
-.contact-item h3,
-.contact-item p {
-    text-align: left !important;
-    direction: ltr !important;
-}
-
-.contact-info {
-    text-align: left !important;
-    direction: ltr !important;
-}
-
-/* Make email item clickable */
-.email-item {
-    cursor: pointer;
-}
-
-.email-item:hover {
-    opacity: 0.8;
-}
-
-/* Override RTL for contact items - keep them left-aligned */
-[dir="rtl"] .contact-item {
-    text-align: left !important;
-    direction: ltr !important;
-}
-
-[dir="rtl"] .contact-item h3,
-[dir="rtl"] .contact-item p {
-    text-align: left !important;
-    direction: ltr !important;
-}
-
-[dir="rtl"] .contact-info {
-    text-align: left !important;
-    direction: ltr !important;
-}
-
-/* Force profile title to be left-aligned */
-.profile-card .card-info p {
-    text-align: left !important;
-    direction: ltr !important;
-}
-
-[dir="rtl"] .profile-card .card-info p {
-    text-align: left !important;
-    direction: ltr !important;
-}
-
-/* Force profile card info to be left-aligned */
-.profile-card .card-info {
-    text-align: left !important;
-    direction: ltr !important;
-}
-
-[dir="rtl"] .profile-card .card-info {
-    text-align: left !important;
-    direction: ltr !important;
-}
-
-/* Force portfolio tech tags alignment */
-[dir="rtl"] .portfolio-tech {
-    text-align: right !important;
-    direction: rtl !important;
-}
-
-[dir="rtl"] .tech-tag {
-    text-align: right !important;
-    direction: rtl !important;
-}
-
-[dir="ltr"] .portfolio-tech {
-    text-align: left !important;
-    direction: ltr !important;
-}
-
-[dir="ltr"] .tech-tag {
-    text-align: left !important;
-    direction: ltr !important;
-}
-
-/* Prevent layout jumping */
-body, html {
-    transition: none !important;
-}
-
-/* Simple smooth scrolling */
-html {
-    scroll-behavior: smooth;
-}
-
-/* Force scroll to work */
-body {
-    overflow-x: hidden;
-    overflow-y: auto;
-    scroll-behavior: smooth;
-}
-
-/* Ensure sections are scrollable */
-section {
-    position: relative;
-    z-index: 1;
-}
-
-/* Remove any scroll blocking */
-* {
-    scroll-behavior: smooth;
-}
-
-/* Fix scroll issues */
-html, body {
-    height: auto;
-    min-height: 100%;
-}
-
-/* Ensure main content is scrollable */
-.main-content {
-    overflow: visible;
-    position: relative;
-}
-
-/* Navigation link hover effects */
-.nav-link {
-    position: relative;
-    transition: color 0.3s ease;
-}
-
-.nav-link:hover {
-    color: var(--primary-color);
-}
-
-/* Beautiful Custom Scrollbar - Always on the right */
-::-webkit-scrollbar {
-    width: 8px;
-    /* Force scrollbar to always be on the right */
-    direction: ltr;
-}
-
-::-webkit-scrollbar-track {
-    background: var(--darker-bg);
-    border-radius: 10px;
-    /* Ensure track is always on the right */
-    direction: ltr;
-}
-
-::-webkit-scrollbar-thumb {
-    background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
-    border-radius: 10px;
-    border: 2px solid var(--darker-bg);
-    /* Ensure thumb is always on the right */
-    direction: ltr;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(45deg, var(--accent-color), var(--primary-color));
-}
-
-/* Firefox scrollbar - Always on the right */
-html {
-    scrollbar-width: thin;
-    scrollbar-color: var(--primary-color) var(--darker-bg);
-    /* Force scrollbar to always be on the right */
-    direction: ltr;
-}
-
-/* Smooth scrollbar transitions */
-::-webkit-scrollbar-thumb {
-    transition: all 0.3s ease;
-}
-
-/* Force scrollbar position for all languages */
-[dir="rtl"] ::-webkit-scrollbar,
-[dir="ltr"] ::-webkit-scrollbar {
-    direction: ltr !important;
-}
-
-[dir="rtl"] ::-webkit-scrollbar-track,
-[dir="ltr"] ::-webkit-scrollbar-track {
-    direction: ltr !important;
-}
-
-[dir="rtl"] ::-webkit-scrollbar-thumb,
-[dir="ltr"] ::-webkit-scrollbar-thumb {
-    direction: ltr !important;
-}
-
-/* Prevent double scrollbar */
-* {
-    box-sizing: border-box;
-}
-
-/* Ensure only one scrollbar */
-body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    /* Force scrollbar to always be on the right */
-    direction: ltr;
-}
-
-/* Force scrollbar position for all languages */
-[dir="rtl"] body,
-[dir="ltr"] body {
-    direction: ltr !important;
-}
-
-[dir="rtl"] html,
-[dir="ltr"] html {
-    direction: ltr !important;
-}
-
-/* Hide scrollbar on mobile */
-@media (max-width: 768px) {
-    ::-webkit-scrollbar {
-        width: 4px;
-        /* Force scrollbar to always be on the right */
-        direction: ltr;
-    }
-    
-    ::-webkit-scrollbar-thumb {
-        border: 1px solid var(--darker-bg);
-        /* Force scrollbar to always be on the right */
-        direction: ltr;
-    }
-    
-    /* Hide scrollbar completely on mobile for cleaner look */
-    body {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-    }
-    
-    body::-webkit-scrollbar {
-        display: none;
-    }
-    
-    /* Force scrollbar position for all languages on mobile */
-    [dir="rtl"] ::-webkit-scrollbar,
-    [dir="ltr"] ::-webkit-scrollbar {
-        direction: ltr !important;
-    }
-    
-    [dir="rtl"] ::-webkit-scrollbar-thumb,
-    [dir="ltr"] ::-webkit-scrollbar-thumb {
-        direction: ltr !important;
-    }
-}
-
-/* Fix RTL navigation positioning */
-[dir="rtl"] .nav-menu {
-    left: auto;
-    right: -100%;
-    transition: right 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
-}
-
-[dir="rtl"] .nav-menu.active {
-    left: auto;
-    right: 0;
-}
-
-/* Fix RTL layout issues */
-[dir="rtl"] .nav-menu {
-    left: auto;
-    right: -100%;
-}
-
-[dir="rtl"] .nav-menu.active {
-    left: auto;
-    right: 0;
-}
-
-[dir="rtl"] .timeline-item {
-    padding-left: 0;
-    padding-right: 80px;
-}
-
-[dir="rtl"] .education-timeline::before {
-    left: auto;
-    right: 30px;
-}
-
-[dir="rtl"] .timeline-marker {
-    left: auto;
-    right: 20px;
 }
 
 /* Animation Classes */
