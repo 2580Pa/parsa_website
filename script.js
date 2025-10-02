@@ -199,69 +199,71 @@ document.addEventListener('DOMContentLoaded', function() {
     showLoadingScreen();
     
     // Initialize everything after loading screen
-    setTimeout(() => {
-        // Detect user's location and set language
-        detectUserLocation();
+    setTimeout(async () => {
+        // First, detect user's location and set language
+        await detectUserLocation();
         
-        // Initialize sections
-        initSections();
-        
-        // Initialize navigation after everything else
-        initNavigation();
-        
-        // Initialize contact form
-        initContactForm();
-        
-        // Initialize smooth scrolling
-        initSmoothScrolling();
-        
-        // Initialize auto scroll
-        initAutoScroll();
-        
-        // Initialize scroll progress
-        initScrollProgress();
-        
-        // Hide loading screen and start animations
-        hideLoadingScreen();
-        
-        // Start animations after site fade-in begins
+        // Wait a bit more to ensure translations are fully applied
         setTimeout(() => {
-            startEntryAnimations();
-            initAnimations();
-        }, 800); // Wait for site fade-in to start
+            // Initialize sections
+            initSections();
+            
+            // Initialize navigation after everything else
+            initNavigation();
+            
+            // Initialize contact form
+            initContactForm();
+            
+            // Initialize smooth scrolling
+            initSmoothScrolling();
+            
+            // Initialize auto scroll
+            initAutoScroll();
+            
+            // Initialize scroll progress
+            initScrollProgress();
+            
+            // Hide loading screen and start animations
+            hideLoadingScreen();
+            
+            // Start animations after site fade-in begins
+            setTimeout(() => {
+                startEntryAnimations();
+                initAnimations();
+            }, 800); // Wait for site fade-in to start
+        }, 200); // Wait for translations to be fully applied
     }, 1000);
 });
 
 // Detect user location and set language
 async function detectUserLocation() {
+    // Set default language immediately to prevent mixing
+    currentLanguage = 'fa';
+    document.documentElement.lang = 'fa';
+    document.documentElement.dir = 'rtl';
+    if (langBtn) {
+        langBtn.textContent = 'EN';
+    }
+    applyTranslations();
+    
     try {
         const response = await fetch('https://ipapi.co/json/');
         const data = await response.json();
         
-        // If user is from Iran, use Persian, otherwise use English
-        if (data.country_code === 'IR') {
-            currentLanguage = 'fa';
-            document.documentElement.lang = 'fa';
-            document.documentElement.dir = 'rtl';
-        } else {
+        // If user is NOT from Iran, change to English
+        if (data.country_code !== 'IR') {
             currentLanguage = 'en';
             document.documentElement.lang = 'en';
             document.documentElement.dir = 'ltr';
+            if (langBtn) {
+                langBtn.textContent = 'FA';
+            }
+            applyTranslations();
         }
-        
-        // Update language button
-        langBtn.textContent = currentLanguage === 'fa' ? 'EN' : 'FA';
-        
-        // Apply translations
-        applyTranslations();
         
     } catch (error) {
         console.log('Could not detect location, using default language (Persian)');
-        currentLanguage = 'fa';
-        document.documentElement.lang = 'fa';
-        document.documentElement.dir = 'rtl';
-        langBtn.textContent = 'EN';
-        applyTranslations();
+        // Already set to Persian above, so no need to change anything
     }
 }
 
@@ -273,18 +275,17 @@ function applyTranslations() {
     document.body.style.transition = 'none';
     document.documentElement.style.transition = 'none';
     
-    // Update HTML attributes
+    // Update HTML attributes FIRST
     document.documentElement.lang = currentLanguage;
     document.documentElement.dir = currentLanguage === 'fa' ? 'rtl' : 'ltr';
     
     // Update language button
-    langBtn.textContent = currentLanguage === 'fa' ? 'EN' : 'FA';
+    if (langBtn) {
+        langBtn.textContent = currentLanguage === 'fa' ? 'EN' : 'FA';
+    }
     
-    // Re-enable transitions after a short delay
-    setTimeout(() => {
-        document.body.style.transition = '';
-        document.documentElement.style.transition = '';
-    }, 100);
+    // Force a reflow to ensure HTML attributes are applied
+    document.documentElement.offsetHeight;
     
     // Translate all elements with data-translate attribute
     const elements = document.querySelectorAll('[data-translate]');
@@ -292,6 +293,8 @@ function applyTranslations() {
         const key = element.getAttribute('data-translate');
         if (translations[currentLanguage] && translations[currentLanguage][key]) {
             element.textContent = translations[currentLanguage][key];
+            // Add translated class to show the element
+            element.classList.add('translated');
         }
     });
     
@@ -307,7 +310,19 @@ function applyTranslations() {
     // Update layout direction
     updateLayoutDirection();
     
-    // Typing animation disabled to prevent conflicts with translation system
+    // Force another reflow to ensure all changes are applied
+    document.documentElement.offsetHeight;
+    
+    // Re-enable transitions after a short delay
+    setTimeout(() => {
+        document.body.style.transition = '';
+        document.documentElement.style.transition = '';
+    }, 100);
+    
+    // Force another reflow to ensure all translations are applied
+    setTimeout(() => {
+        document.documentElement.offsetHeight;
+    }, 50);
     
     console.log('Translations applied successfully');
 }
@@ -1788,9 +1803,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 500);
     
     initFormHandling();
-    
-    // Detect user location and apply translations
-    detectUserLocation();
 
 });
 

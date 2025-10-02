@@ -51,6 +51,16 @@
     will-change: opacity;
 }
 
+/* Hide translated elements until translation is applied */
+[data-translate] {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+[data-translate].translated {
+    opacity: 1;
+}
+
 .main-content.fade-in {
     opacity: 1;
 }
