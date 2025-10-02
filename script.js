@@ -229,7 +229,7 @@ document.addEventListener('DOMContentLoaded', function() {
             startEntryAnimations();
             initAnimations();
         }, 800); // Wait for site fade-in to start
-    }, 3000);
+    }, 1000);
 });
 
 // Detect user location and set language
@@ -617,14 +617,33 @@ window.addEventListener('scroll', function() {
     }
 });
 
-// Parallax effect for hero background (exactly like backup)
-window.addEventListener('scroll', function() {
-    const scrolled = window.pageYOffset;
-    const heroBackground = document.querySelector('.hero-background');
-    if (heroBackground) {
-        heroBackground.style.transform = `translateY(${scrolled * 0.5}px)`;
+// Parallax effect for hero background (supports window or inner scroller)
+// Simple parallax effect - only mountains move
+function updateParallax() {
+    const mountains = document.querySelector('.mountains');
+    if (mountains) {
+        // Try all scroll sources
+        const scrolled = Math.max(
+            window.pageYOffset || 0,
+            document.documentElement.scrollTop || 0,
+            document.body.scrollTop || 0
+        );
+        // More noticeable and smooth parallax movement
+        const parallaxAmount = scrolled * 0.6;
+        mountains.style.transform = `translateY(${parallaxAmount}px)`;
     }
-});
+}
+
+// Listen to body scroll since that's what works
+document.body.addEventListener('scroll', updateParallax, { passive: true });
+window.addEventListener('scroll', updateParallax, { passive: true });
+document.addEventListener('scroll', updateParallax, { passive: true });
+
+// Initialize parallax
+document.addEventListener('DOMContentLoaded', updateParallax);
+setTimeout(updateParallax, 500);
+
+updateParallax(); // Set initial position
 
 // Initialize sections
 function initSections() {
@@ -1203,6 +1222,34 @@ function initPhoneActions() {
             });
         }
         
+        // Email copy functionality
+        const emailCopyBtn = document.querySelector('.email-copy-btn');
+        if (emailCopyBtn) {
+            emailCopyBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const emailItem = this.closest('.email-item');
+                const email = emailItem.getAttribute('data-email');
+                
+                copyToClipboard(email);
+            });
+        }
+        
+        // Email send functionality
+        const emailBtn = document.querySelector('.email-btn');
+        if (emailBtn) {
+            emailBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const emailItem = this.closest('.email-item');
+                const email = emailItem.getAttribute('data-email');
+                
+                // Open email client
+                window.location.href = `mailto:${email}`;
+            });
+        }
+        
+        
         // Click on phone number to copy
         const phoneNumber = document.querySelector('.phone-number');
         if (phoneNumber) {
@@ -1218,6 +1265,23 @@ function initPhoneActions() {
             // Add cursor pointer
             phoneNumber.style.cursor = 'pointer';
         }
+        
+        // Click on email address to copy
+        const emailAddress = document.querySelector('.email-address');
+        if (emailAddress) {
+            emailAddress.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const emailItem = this.closest('.email-item');
+                const email = emailItem.getAttribute('data-email');
+                
+                copyToClipboard(email);
+            });
+            
+            // Add cursor pointer
+            emailAddress.style.cursor = 'pointer';
+        }
+        
     }, 100);
 }
 
@@ -1616,9 +1680,7 @@ function showLoadingScreen() {
         loadingScreen.style.display = 'flex';
         loadingScreen.classList.remove('hidden');
         
-        // Disable scrolling during loading
-        document.body.style.overflow = 'hidden';
-        document.documentElement.style.overflow = 'hidden';
+        // Keep scrolling enabled during loading
         
         console.log('Loading screen shown');
     } else {
@@ -1645,10 +1707,6 @@ function hideLoadingScreen() {
             if (loadingScreen.parentNode) {
                 loadingScreen.parentNode.removeChild(loadingScreen);
             }
-            
-            // Enable scrolling after loading screen is completely removed
-            document.body.style.overflow = '';
-            document.documentElement.style.overflow = '';
         }, 500); // Match the CSS transition duration
     }
 }
@@ -1723,9 +1781,16 @@ document.addEventListener('DOMContentLoaded', function() {
     initAutoScroll();
     initScrollProgress();
     initTypingAnimation();
-    initPhoneActions();
+    
+    // Initialize contact actions with a small delay to ensure DOM is ready
+    setTimeout(() => {
+        initPhoneActions();
+    }, 500);
+    
     initFormHandling();
     
     // Detect user location and apply translations
     detectUserLocation();
+
 });
+
