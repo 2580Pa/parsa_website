@@ -1805,4 +1805,3 @@ document.addEventListener('DOMContentLoaded', function() {
     initFormHandling();
 
 });
-
