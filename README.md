@@ -64,7 +64,7 @@ A modern, responsive personal portfolio website built with HTML, CSS, and JavaSc
 
 ## Live Demo
 
-Visit the live website: [https://gorgeous-beignet-b550e8.netlify.app/]
+Visit the live website: [https://gorgeous-beignet-b550e8.netlify.app/ |  http://nikoonahad.freehost.io/]
 
 ## Setup
 
@@ -84,3 +84,8 @@ Visit the live website: [https://gorgeous-beignet-b550e8.netlify.app/]
 ## License
 
 This project is open source and available under the [MIT License](LICENSE).
+## update repository in git
+git add .
+git commit -m "توضیح تغییرات"
+git push origin main
+

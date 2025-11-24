@@ -49,6 +49,11 @@
     opacity: 0;
     transition: opacity 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     will-change: opacity;
+    padding-top: 80px;
+}
+
+.main-content.loaded {
+    opacity: 1;
 }
 
 /* Hide translated elements until translation is applied */
@@ -255,11 +260,14 @@ body {
 .navbar {
     position: fixed;
     top: 0;
+    left: 0;
     width: 100%;
     background: rgba(15, 15, 35, 0.95);
     backdrop-filter: blur(10px);
     z-index: 1000;
     transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    border-bottom: 1px solid rgba(139, 92, 246, 0.2);
 }
 
 .nav-container {
@@ -284,6 +292,87 @@ body {
 .nav-menu {
     display: flex;
     gap: 2rem;
+}
+
+.resume-dropdown {
+    position: relative;
+    margin-right: 1rem;
+}
+
+.resume-toggle {
+    background: transparent;
+    border: 2px solid rgba(139, 92, 246, 0.5);
+    color: var(--text-primary);
+    padding: 8px 18px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.resume-toggle:hover,
+.resume-toggle:focus {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+    box-shadow: var(--shadow-primary);
+}
+
+.resume-menu {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    background: rgba(15, 15, 35, 0.98);
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    border-radius: 15px;
+    padding: 12px;
+    min-width: 220px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(12px);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    z-index: 1200;
+}
+
+.resume-menu.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.resume-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.resume-item svg {
+    width: 20px;
+    height: 20px;
+    fill: var(--text-primary);
+    opacity: 0.8;
+    transition: all 0.3s ease;
+}
+
+.resume-item:hover {
+    background: rgba(139, 92, 246, 0.15);
+    color: var(--primary-color);
+}
+
+.resume-item:hover svg {
+    fill: var(--primary-color);
+    opacity: 1;
+}
+
+.resume-item + .resume-item {
+    margin-top: 8px;
 }
 
 .nav-link {
@@ -689,13 +778,20 @@ section {
 .profile-avatar {
     width: 60px;
     height: 60px;
-    background: var(--gradient-primary);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem;
-    color: white;
+    background: rgba(139, 92, 246, 0.2);
+    overflow: hidden;
+}
+
+.profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid rgba(139, 92, 246, 0.6);
 }
 
 .card-info h3 {

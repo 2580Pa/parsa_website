@@ -43,6 +43,23 @@
                 <a href="#portfolio" class="nav-link" data-section="4" data-translate="nav-portfolio">Portfolio</a>
                 <a href="#contact" class="nav-link" data-section="5" data-translate="nav-contact">Contact</a>
             </div>
+            <div class="resume-dropdown">
+                <button class="resume-toggle" id="resume-toggle" data-translate="nav-resume">برسی رزومه</button>
+                <div class="resume-menu" id="resume-menu">
+                    <a href="resume.pdf" target="_blank" rel="noopener" class="resume-item">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12 5c-7.633 0-11 6.5-11 6.5s3.367 6.5 11 6.5 11-6.5 11-6.5S19.633 5 12 5zm0 11a4.5 4.5 0 1 1 .001-9.001A4.5 4.5 0 0 1 12 16zm0-7.2A2.7 2.7 0 1 0 14.7 11.5 2.7 2.7 0 0 0 12 8.8z"/>
+                        </svg>
+                        <span data-translate="resume-view-text">مشاهده آنلاین</span>
+                    </a>
+                    <a href="resume.pdf" download class="resume-item">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12 3a1 1 0 0 1 1 1v9.585l2.293-2.292a1 1 0 0 1 1.414 1.414l-4 3.999a1 1 0 0 1-1.414 0l-4-3.999a1 1 0 0 1 1.414-1.414L11 13.585V4a1 1 0 0 1 1-1zm-7 16h14v2H5z"/>
+                        </svg>
+                        <span data-translate="resume-download-text">دانلود رزومه</span>
+                    </a>
+                </div>
+            </div>
             <div class="nav-toggle" id="nav-toggle">
                 <span class="bar"></span>
                 <span class="bar"></span>
@@ -99,13 +116,7 @@
             <div class="about-content">
                 <div class="about-text">
                     <p class="about-description" data-translate="about-description">
-                        With over <span class="highlight">3 years of experience</span> in full-stack development, I have advanced skills in 
-                        <span class="highlight">HTML</span>, <span class="highlight">CSS</span>, <span class="highlight">JavaScript</span>, 
-                        <span class="highlight">React.js</span>, and <span class="highlight">Node.js</span>. I specialize in modern frameworks 
-                        and have extensive experience with <span class="highlight">Next.js</span>, <span class="highlight">Vue.js</span>, 
-                        and <span class="highlight">TypeScript</span>. I'm also proficient in styling frameworks like 
-                        <span class="highlight">Tailwind CSS</span> and <span class="highlight">Sass</span>. 
-                        I have strong teamwork abilities and extensive experience with web optimization standards and best practices.
+                        Young and motivated developer proficient in HTML, CSS, and JavaScript with familiarity in React and Git. Passionate about solving problems, learning new technologies quickly, and ready to collaborate on real projects while growing within professional teams.
                     </p>
                     <div class="about-traits">
                         <div class="trait">
@@ -138,7 +149,7 @@
                     <div class="profile-card">
                         <div class="card-header">
                             <div class="profile-avatar">
-                                <i class="fas fa-user"></i>
+                                <img src="Asset 9-100.jpg" alt="Parsa Nikoonahad" class="profile-photo">
                             </div>
                             <div class="card-info">
                                 <h3 data-translate="profile-name">Parsa Nikoonahad</h3>
@@ -189,14 +200,6 @@
                             <i class="fab fa-react"></i>
                             <span>React.js</span>
                         </div>
-                        <div class="skill-item">
-                            <i class="fab fa-node-js"></i>
-                            <span>Next.js</span>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fab fa-sass"></i>
-                            <span>Sass</span>
-                        </div>
                     </div>
                 </div>
                 <div class="skill-category">
@@ -211,16 +214,8 @@
                             <span>GitHub</span>
                         </div>
                         <div class="skill-item">
-                            <i class="fab fa-figma"></i>
-                            <span>Figma</span>
-                        </div>
-                        <div class="skill-item">
                             <i class="fas fa-mobile-alt"></i>
                             <span>Responsive Design</span>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fas fa-rocket"></i>
-                            <span>Performance</span>
                         </div>
                         <div class="skill-item">
                             <i class="fas fa-search"></i>
@@ -240,12 +235,11 @@
                 <div class="timeline-item">
                     <div class="timeline-marker"></div>
                     <div class="timeline-content">
-                        <h3 data-translate="education-degree">Bachelor's Degree in Computer Engineering</h3>
-                        <p class="timeline-location" data-translate="education-university">University of Tehran</p>
-                        <p class="timeline-date" data-translate="education-date">2019 - 2023</p>
+                        <h3 data-translate="education-degree">11th Grade - Network & Software</h3>
+                        <p class="timeline-location" data-translate="education-university">Imam Hossein Boys High School</p>
+                        <p class="timeline-date" data-translate="education-date">1405 - 1404</p>
                         <p class="timeline-description" data-translate="education-description">
-                            Studied Computer Engineering with a focus on Software Engineering. 
-                            Concentrated on web development and computer algorithms.
+                            Studying in the Network & Software major with focus on practical IT skills and systems.
                         </p>
                     </div>
                 </div>
@@ -254,7 +248,7 @@
                     <div class="timeline-content">
                         <h3 data-translate="cert-react">React.js Certification</h3>
                         <p class="timeline-location" data-translate="cert-meta">Meta (Facebook)</p>
-                        <p class="timeline-date" data-translate="cert-date-1">2022</p>
+                        <p class="timeline-date" data-translate="cert-date-1">2024</p>
                         <p class="timeline-description" data-translate="cert-description-1">
                             Completed specialized React.js course from Meta including Hooks, 
                             Context API, and best development practices.
@@ -266,7 +260,7 @@
                     <div class="timeline-content">
                         <h3 data-translate="cert-js">JavaScript Certification</h3>
                         <p class="timeline-location" data-translate="cert-fcc">freeCodeCamp</p>
-                        <p class="timeline-date" data-translate="cert-date-2">2021</p>
+                        <p class="timeline-date" data-translate="cert-date-2">2023</p>
                         <p class="timeline-description" data-translate="cert-description-2">
                             Completed comprehensive JavaScript course including ES6+, 
                             DOM Manipulation, and API Integration.
@@ -285,28 +279,25 @@
                 <div class="portfolio-item">
                     <div class="portfolio-image">
                         <div class="project-preview">
-                            <i class="fas fa-shopping-cart"></i>
+                            <i class="fas fa-graduation-cap"></i>
                         </div>
                         <div class="portfolio-overlay">
-                            <a href="#" class="portfolio-link">
+                            <a href="https://inteladvisor.ir/" class="portfolio-link" target="_blank" rel="noopener">
                                 <i class="fas fa-external-link-alt"></i>
                             </a>
                         </div>
                     </div>
                     <div class="portfolio-content">
-                        <h3 data-translate="project-shop">E-Commerce Platform</h3>
+                        <h3 data-translate="project-shop">Intel Advisor – University Counseling Platform</h3>
                         <p data-translate="project-shop-desc">
-                            Online shopping platform built with Next.js for frontend, 
-                            Redux for state management, and Firebase for backend. 
-                            Responsive design with Tailwind CSS.
+                            Comprehensive university guidance platform built with React for the frontend, Django for the backend, and MySQL for data management. Live at inteladvisor.ir.
                         </p>
                         <div class="portfolio-tech">
-                            <span class="tech-tag" data-translate="tech-nextjs">Next.js</span>
-                            <span class="tech-tag" data-translate="tech-redux">Redux</span>
-                            <span class="tech-tag" data-translate="tech-firebase">Firebase</span>
-                            <span class="tech-tag" data-translate="tech-tailwind">Tailwind CSS</span>
+                            <span class="tech-tag" data-translate="tech-react">React.js</span>
+                            <span class="tech-tag" data-translate="tech-django">Django</span>
+                            <span class="tech-tag" data-translate="tech-mysql">MySQL</span>
                         </div>
-                        <a href="#" class="btn btn-primary" data-translate="project-view">View Project</a>
+                        <a href="https://inteladvisor.ir/" class="btn btn-primary" target="_blank" rel="noopener" data-translate="project-view">View Project</a>
                     </div>
                 </div>
                 <div class="portfolio-item">

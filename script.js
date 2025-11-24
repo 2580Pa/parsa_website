@@ -22,6 +22,9 @@ const translations = {
         'nav-education': 'تحصیلات',
         'nav-portfolio': 'نمونه کارها',
         'nav-contact': 'تماس',
+        'nav-resume': 'بررسی رزومه',
+        'resume-view-text': 'مشاهده آنلاین',
+        'resume-download-text': 'دانلود رزومه',
         
         // Hero Section
         'hero-welcome': 'خوش آمدید به',
@@ -33,7 +36,7 @@ const translations = {
         
         // About Section
         'about-title': 'درباره من',
-        'about-description': 'با بیش از ۳ سال تجربه در توسعه فرانت‌اند و بک‌اند، مهارت‌های پیشرفته‌ای در HTML، CSS، JavaScript، React.js و Node.js دارم. در فریمورک‌های مدرن تخصص دارم و تجربه گسترده‌ای با Next.js، Vue.js و TypeScript دارم. همچنین در فریمورک‌های استایل‌دهی مانند Tailwind CSS و Sass مهارت دارم. توانایی کار تیمی قوی و تجربه گسترده در استانداردهای بهینه‌سازی وب و بهترین شیوه‌ها دارم.',
+        'about-description': 'برنامه‌نویس جوان و باانگیزه با تسلط بر HTML، CSS، JavaScript و آشنایی با React و Git. علاقه‌مند به حل مسئله و یادگیری سریع تکنولوژی‌های جدید. آماده همکاری در پروژه‌های واقعی و رشد در تیم‌های حرفه‌ای.',
         'trait-learner': 'علاقه‌مند به یادگیری',
         'trait-passionate': 'پرشور',
         'trait-problem-solver': 'حل‌کننده مسئله',
@@ -53,23 +56,23 @@ const translations = {
         
         // Education Section
         'education-title': 'تحصیلات و گواهینامه‌ها',
-        'education-degree': 'کارشناسی مهندسی کامپیوتر',
-        'education-university': 'دانشگاه تهران',
-        'education-date': '۱۳۹۸ - ۱۴۰۲',
-        'education-description': 'تحصیل در رشته مهندسی کامپیوتر با گرایش نرم‌افزار. تمرکز بر توسعه وب و الگوریتم‌های کامپیوتری.',
+        'education-degree': 'پایه یازدهم - شبکه و نرم‌افزار',
+        'education-university': 'دبیرستان دوره دوم پسرانه امام حسین',
+        'education-date': '۱۴۰۵ - ۱۴۰۴',
+        'education-description': 'تحصیل در رشته شبکه و نرم‌افزار با تمرکز بر مهارت‌های عملی فناوری اطلاعات و سیستم‌ها.',
         'cert-react': 'گواهینامه React.js',
         'cert-meta': 'Meta (فیس‌بوک)',
-        'cert-date-1': '۱۴۰۱',
+        'cert-date-1': '۱۴۰۳',
         'cert-description-1': 'تکمیل دوره تخصصی React.js از Meta شامل Hooks، Context API و بهترین شیوه‌های توسعه.',
         'cert-js': 'گواهینامه JavaScript',
         'cert-fcc': 'freeCodeCamp',
-        'cert-date-2': '۱۴۰۰',
+        'cert-date-2': '۱۴۰۲',
         'cert-description-2': 'تکمیل دوره کامل JavaScript شامل ES6+، DOM Manipulation و API Integration.',
         
         // Portfolio Section
         'portfolio-title': 'نمونه کارهای من',
-        'project-shop': 'پلتفرم تجارت الکترونیک',
-        'project-shop-desc': 'پلتفرم خرید آنلاین ساخته شده با Next.js برای فرانت‌اند، Redux برای مدیریت state و Firebase برای بک‌اند. طراحی واکنش‌گرا با Tailwind CSS.',
+        'project-shop': 'پلتفرم مشاوره دانشگاهی Intel Advisor',
+        'project-shop-desc': 'پلتفرم جامع مشاوره و انتخاب دانشگاه با فرانت‌اند React، بک‌اند Django و پایگاه داده MySQL. در دسترس در inteladvisor.ir.',
         'project-todo': 'اپلیکیشن ToDo',
         'project-todo-desc': 'اپلیکیشن مدیریت کارها با React.js و TypeScript. شامل API های مختلف و استفاده از React Router DOM برای مسیریابی. طراحی واکنش‌گرا با Tailwind CSS.',
         'project-view': 'مشاهده پروژه',
@@ -79,6 +82,8 @@ const translations = {
         'tech-redux': 'Redux',
         'tech-firebase': 'Firebase',
         'tech-tailwind': 'Tailwind CSS',
+        'tech-django': 'Django',
+        'tech-mysql': 'MySQL',
         'tech-react': 'React.js',
         'tech-typescript': 'TypeScript',
         'tech-router': 'React Router',
@@ -105,6 +110,9 @@ const translations = {
         'nav-education': 'Education',
         'nav-portfolio': 'Portfolio',
         'nav-contact': 'Contact',
+        'nav-resume': 'Resume',
+        'resume-view-text': 'View Online',
+        'resume-download-text': 'Download PDF',
         
         // Hero Section
         'hero-welcome': 'Welcome To',
@@ -116,7 +124,7 @@ const translations = {
         
         // About Section
         'about-title': 'About Me',
-        'about-description': 'With over 3 years of experience in full-stack development, I have advanced skills in HTML, CSS, JavaScript, React.js, and Node.js. I specialize in modern frameworks and have extensive experience with Next.js, Vue.js, and TypeScript. I\'m also proficient in styling frameworks like Tailwind CSS and Sass. I have strong teamwork abilities and extensive experience with web optimization standards and best practices.',
+        'about-description': 'Young and motivated developer proficient in HTML, CSS, and JavaScript with familiarity in React and Git. Passionate about problem-solving, learning new technologies quickly, and ready to collaborate on real-world projects while growing within professional teams.',
         'trait-learner': 'Eager Learner',
         'trait-passionate': 'Passionate',
         'trait-problem-solver': 'Problem Solver',
@@ -136,10 +144,10 @@ const translations = {
         
         // Education Section
         'education-title': 'Education & Certifications',
-        'education-degree': 'Bachelor\'s Degree in Computer Engineering',
-        'education-university': 'University of Tehran',
-        'education-date': '2019 - 2023',
-        'education-description': 'Studied Computer Engineering with a focus on Software Engineering. Concentrated on web development and computer algorithms.',
+        'education-degree': '11th Grade - Network & Software',
+        'education-university': 'Imam Hossein Boys High School',
+        'education-date': '2025 - 2026',
+        'education-description': 'Studying in the Network & Software major with emphasis on practical IT skills and systems.',
         'cert-react': 'React.js Certification',
         'cert-meta': 'Meta (Facebook)',
         'cert-date-1': '2022',
@@ -151,8 +159,8 @@ const translations = {
         
         // Portfolio Section
         'portfolio-title': 'My Portfolio',
-        'project-shop': 'E-Commerce Platform',
-        'project-shop-desc': 'Online shopping platform built with Next.js for frontend, Redux for state management, and Firebase for backend. Responsive design with Tailwind CSS.',
+        'project-shop': 'Intel Advisor – University Counseling Platform',
+        'project-shop-desc': 'Comprehensive university advising platform powered by React on the frontend, Django on the backend, and MySQL for data storage. Live on inteladvisor.ir.',
         'project-todo': 'Todo Application',
         'project-todo-desc': 'Task management application built with React.js and TypeScript. Features various APIs and React Router DOM for navigation. Responsive design with Tailwind CSS.',
         'project-view': 'View Project',
@@ -162,6 +170,8 @@ const translations = {
         'tech-redux': 'Redux',
         'tech-firebase': 'Firebase',
         'tech-tailwind': 'Tailwind CSS',
+        'tech-django': 'Django',
+        'tech-mysql': 'MySQL',
         'tech-react': 'React.js',
         'tech-typescript': 'TypeScript',
         'tech-router': 'React Router',
@@ -186,6 +196,8 @@ const translations = {
 const navToggle = document.getElementById('nav-toggle');
 const navMenu = document.getElementById('nav-menu');
 const langBtn = document.getElementById('lang-btn');
+const resumeToggle = document.getElementById('resume-toggle');
+const resumeMenu = document.getElementById('resume-menu');
 const contactForm = document.getElementById('contact-form');
 
 // Initialize the website
@@ -398,8 +410,25 @@ function initNavigation() {
             console.log('Nav link clicked');
             navMenu.classList.remove('active');
             navToggle.classList.remove('active');
+            if (resumeMenu) {
+                resumeMenu.classList.remove('open');
+            }
         });
     });
+
+    const closeResumeMenu = () => {
+        if (resumeMenu) {
+            resumeMenu.classList.remove('open');
+        }
+    };
+
+    if (resumeToggle && resumeMenu) {
+        resumeToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            resumeMenu.classList.toggle('open');
+        });
+    }
     
     // Language button - completely separate from menu
     langBtn.addEventListener('click', function(e) {
@@ -424,6 +453,12 @@ function initNavigation() {
             navMenu.classList.remove('active');
             navToggle.classList.remove('active');
         }
+
+        if (resumeMenu && resumeToggle &&
+            !resumeMenu.contains(event.target) &&
+            !resumeToggle.contains(event.target)) {
+            closeResumeMenu();
+        }
     });
     
     // Close menu on escape key
@@ -431,6 +466,7 @@ function initNavigation() {
         if (e.key === 'Escape') {
             navMenu.classList.remove('active');
             navToggle.classList.remove('active');
+            closeResumeMenu();
         }
     });
 }
@@ -1713,7 +1749,24 @@ function hideLoadingScreen() {
         // Start site fade-in animation after loading screen starts fading
         setTimeout(() => {
             if (mainContent) {
+                mainContent.classList.remove('loaded');
                 mainContent.classList.add('site-entrance');
+                
+                const handleAnimationEnd = () => {
+                    mainContent.classList.remove('site-entrance');
+                    mainContent.classList.add('loaded');
+                    mainContent.removeEventListener('animationend', handleAnimationEnd);
+                };
+                
+                mainContent.addEventListener('animationend', handleAnimationEnd);
+                
+                // Fallback in case animationend does not fire
+                setTimeout(() => {
+                    if (!mainContent.classList.contains('loaded')) {
+                        mainContent.classList.remove('site-entrance');
+                        mainContent.classList.add('loaded');
+                    }
+                }, 2000);
             }
         }, 200); // Start fade-in slightly before loading screen is completely hidden
         
@@ -1805,3 +1858,4 @@ document.addEventListener('DOMContentLoaded', function() {
     initFormHandling();
 
 });
+
