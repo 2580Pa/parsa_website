@@ -1605,6 +1605,42 @@ textarea {
         outline-offset: 2px;
     }
 
+    /* Resume dropdown responsiveness */
+    .nav-container {
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+
+    .resume-dropdown {
+        margin: 0;
+        width: auto;
+        order: 3;
+    }
+
+    .resume-toggle {
+        padding: 6px 14px;
+        font-size: 0.9rem;
+        border-width: 1.5px;
+    }
+
+    .resume-menu {
+        position: fixed;
+        top: 80px;
+        left: 16px;
+        right: 16px;
+        min-width: unset;
+        width: auto;
+        transform: translateY(-10px);
+    }
+
+    .resume-menu.open {
+        transform: translateY(0);
+    }
+
+    .resume-item {
+        justify-content: flex-start;
+    }
+
     .hero-title {
         font-size: 2.5rem;
     }
@@ -1662,6 +1698,8 @@ textarea {
     .nav-container {
         padding: 0 1rem;
         max-width: 100%;
+        gap: 0.5rem;
+        flex-wrap: wrap;
     }
     
     .nav-brand {
@@ -2138,6 +2176,22 @@ textarea {
     .btn {
         width: 100%;
         max-width: 250px;
+    }
+
+    .resume-dropdown {
+        width: 100%;
+        order: 4;
+    }
+
+    .resume-toggle {
+        width: 100%;
+        text-align: center;
+    }
+
+    .resume-menu {
+        left: 12px;
+        right: 12px;
+        top: 85px;
     }
 }
 

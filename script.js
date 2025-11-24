@@ -6,6 +6,8 @@ let isUserScrolling = false;
 let autoScrollTriggered = false;
 let autoScrollEnabled = false; // Disable auto-scroll by default
 let sections = [];
+let typingIntervals = [];
+let typingTimeout = null;
 
 // EmailJS configuration
 const EMAILJS_SERVICE_ID = 'service_mvmdv2j';
@@ -336,6 +338,14 @@ function applyTranslations() {
         document.documentElement.offsetHeight;
     }, 50);
     
+    if (typingTimeout) {
+        clearTimeout(typingTimeout);
+    }
+    clearTypingAnimations();
+    typingTimeout = setTimeout(() => {
+        initTypingAnimation();
+    }, 200);
+    
     console.log('Translations applied successfully');
 }
 
@@ -618,39 +628,42 @@ function showNotification(message, type) {
 // Initialize smooth scrolling
 
 // Initialize typing animation
+function clearTypingAnimations() {
+    typingIntervals.forEach(interval => clearInterval(interval));
+    typingIntervals = [];
+}
+
 function initTypingAnimation() {
+    clearTypingAnimations();
     const heroTitle = document.querySelector('.hero-title');
     if (!heroTitle) return;
     
-    // Add typing effect to hero title
     const titleLines = heroTitle.querySelectorAll('.title-line');
     titleLines.forEach((line, index) => {
-        const text = line.textContent;
+        const text = line.textContent && line.textContent.trim().length > 0
+            ? line.textContent
+            : (line.getAttribute('data-full-text') || '');
         
-        // Only apply typing effect if text is not empty and not already processed
-        if (text && text.trim() !== '' && !line.classList.contains('typing-processed')) {
-            line.classList.add('typing-processed');
+        if (!text) return;
+        
+        line.setAttribute('data-full-text', text);
         line.textContent = '';
         line.style.opacity = '1';
         
-        setTimeout(() => {
-            typeText(line, text, 50);
-        }, index * 1000);
-        }
+        const startTyping = () => {
+            const timer = setInterval(() => {
+                const currentText = line.textContent || '';
+                if (currentText.length < text.length) {
+                    line.textContent += text.charAt(currentText.length);
+                } else {
+                    clearInterval(timer);
+                }
+            }, 50);
+            typingIntervals.push(timer);
+        };
+        
+        setTimeout(startTyping, index * 400);
     });
-}
-
-// Type text effect
-function typeText(element, text, speed) {
-    let i = 0;
-    const timer = setInterval(() => {
-        if (i < text.length) {
-            element.textContent += text.charAt(i);
-            i++;
-        } else {
-            clearInterval(timer);
-        }
-    }, speed);
 }
 
 // Navbar scroll effect (like backup)
@@ -734,6 +747,14 @@ function initAutoScroll() {
     // Keyboard navigation - only next/prev (desktop only)
     if (window.innerWidth > 768) {
         document.addEventListener('keydown', function(e) {
+            const target = e.target;
+            const isInput =
+                target.tagName === 'INPUT' ||
+                target.tagName === 'TEXTAREA' ||
+                target.isContentEditable;
+            if (isInput) {
+                return;
+            }
             if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === ' ') {
                 e.preventDefault();
                 scrollToNextSection();
@@ -1612,14 +1633,20 @@ function initFormHandling() {
                         emailEmpty: email.trim() === '',
                         messageEmpty: message.trim() === ''
                     });
-                    showNotification('لطفاً تمام فیلدها را پر کنید', 'error');
+                    showNotification(
+                        currentLanguage === 'fa'
+                            ? 'لطفاً تمام فیلدها را پر کنید'
+                            : 'Please fill in all fields',
+                        'error'
+                    );
                     return;
                 }
                 
                 // Show loading state
                 const submitBtn = contactForm.querySelector('button[type="submit"]');
                 const originalText = submitBtn.innerHTML;
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> در حال ارسال...';
+                const sendingText = currentLanguage === 'fa' ? 'در حال ارسال...' : 'Sending...';
+                submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${sendingText}`;
                 submitBtn.disabled = true;
                 
                 // Prepare email parameters
@@ -1635,12 +1662,22 @@ function initFormHandling() {
                 emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
                     .then(function(response) {
                         console.log('Email sent successfully:', response);
-                        showNotification('پیام شما با موفقیت ارسال شد!', 'success');
+                        showNotification(
+                            currentLanguage === 'fa'
+                                ? 'پیام شما با موفقیت ارسال شد!'
+                                : 'Your message was sent successfully!',
+                            'success'
+                        );
                         contactForm.reset();
                     })
                     .catch(function(error) {
                         console.error('Email sending failed:', error);
-                        showNotification('خطا در ارسال پیام. لطفاً دوباره تلاش کنید.', 'error');
+                        showNotification(
+                            currentLanguage === 'fa'
+                                ? 'خطا در ارسال پیام. لطفاً دوباره تلاش کنید.'
+                                : 'Failed to send the message. Please try again.',
+                            'error'
+                        );
                     })
                     .finally(function() {
                         // Reset button state
@@ -1848,7 +1885,6 @@ document.addEventListener('DOMContentLoaded', function() {
     initSmoothScrolling();
     initAutoScroll();
     initScrollProgress();
-    initTypingAnimation();
     
     // Initialize contact actions with a small delay to ensure DOM is ready
     setTimeout(() => {
