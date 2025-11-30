@@ -244,6 +244,8 @@ document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => {
                 startEntryAnimations();
                 initAnimations();
+                initParallax();
+                initScrollingObject();
             }, 800); // Wait for site fade-in to start
         }, 200); // Wait for translations to be fully applied
     }, 1000);
@@ -497,18 +499,16 @@ function initAnimations() {
         });
     }, observerOptions);
     
-    // Observe elements for animation
+    // Observe elements for animation, EXCLUDING those managed by data-reveal system
     const animatedElements = document.querySelectorAll('.about-content, .skills-grid, .timeline-item, .portfolio-item, .contact-content');
-    animatedElements.forEach(el => {
-        el.classList.add('fade-in');
-        observer.observe(el);
+    const filtered = Array.from(animatedElements).filter(el => {
+        // Skip any element that is inside a gated reveal section or has its own data-reveal
+        const inRevealSection = !!el.closest('section[data-reveal-section]');
+        const selfReveal = el.hasAttribute('data-reveal') || !!el.querySelector('[data-reveal]');
+        return !inRevealSection && !selfReveal;
     });
     
-    // Also observe individual portfolio items and timeline items
-    const portfolioItems = document.querySelectorAll('.portfolio-item');
-    const timelineItems = document.querySelectorAll('.timeline-item');
-    
-    [...portfolioItems, ...timelineItems].forEach(el => {
+    filtered.forEach(el => {
         el.classList.add('fade-in');
         observer.observe(el);
     });
@@ -1880,6 +1880,139 @@ function startEntryAnimations() {
 }
 
 // Initialize everything when DOM is loaded
+// Parallax engine for depth and motion
+function initParallax() {
+    try {
+        if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            return; // Respect user preference
+        }
+
+        const layers = Array.from(document.querySelectorAll('.parallax-layer'));
+        if (!layers.length) return;
+
+        let mouseX = 0, mouseY = 0;
+        window.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX / window.innerWidth) - 0.5;
+            mouseY = (e.clientY / window.innerHeight) - 0.5;
+        }, { passive: true });
+
+        const updateTransforms = () => {
+            const vh = window.innerHeight;
+            layers.forEach(layer => {
+                const section = layer.closest('section') || document.body;
+                const rect = section.getBoundingClientRect();
+                const depth = parseFloat(layer.dataset.depth || '0.3');
+                const progress = ((vh / 2) - rect.top) / vh; // center-based influence
+
+                const translateY = progress * depth * 160; // stronger parallax
+                const translateX = mouseX * depth * 40;   // noticeable tilt
+                const rotateZ = mouseX * depth * 3;       // slight rotation
+
+                layer.style.transform = `translate3d(${translateX}px, ${translateY}px, 0) rotate(${rotateZ}deg)`;
+            });
+        };
+
+        let ticking = false;
+        const onScrollOrResize = () => {
+            if (!ticking) {
+                ticking = true;
+                requestAnimationFrame(() => {
+                    updateTransforms();
+                    ticking = false;
+                });
+            }
+        };
+
+        window.addEventListener('scroll', onScrollOrResize, { passive: true });
+        window.addEventListener('resize', onScrollOrResize);
+        onScrollOrResize();
+
+        // Activate sections when entering viewport
+        if ('IntersectionObserver' in window) {
+            const sections = new Set(layers.map(l => l.closest('section')).filter(Boolean));
+            const io = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    const el = entry.target;
+                    if (entry.isIntersecting) {
+                        el.classList.add('parallax-active');
+                    } else {
+                        el.classList.remove('parallax-active');
+                    }
+                });
+            }, { threshold: 0.1 });
+            sections.forEach(s => io.observe(s));
+        }
+    } catch (err) {
+        console.error('Parallax init error:', err);
+    }
+}
+
+// Floating React icon: appears after hero, spins near skills, then explodes
+function initScrollingObject() {
+    try {
+        if (initScrollingObject._initialized) return;
+        initScrollingObject._initialized = true;
+
+        const object = document.getElementById('scrollingObject');
+        const hero = document.getElementById('home');
+        const skills = document.getElementById('skills');
+        if (!object || !hero || !skills) return;
+
+        const skillItems = Array.from(document.querySelectorAll('.skills .skill-item'));
+        let exploded = false;
+
+        const compute = () => {
+            const y = window.scrollY || window.pageYOffset;
+            const heroBottom = hero.offsetTop + hero.offsetHeight;
+            const skillsTop = skills.offsetTop;
+            
+            // نشان دادن زودتر آیکون پس از عبور از بخش هیرو
+            const showThreshold = heroBottom - window.innerHeight * 0.5;
+            if (!exploded && y > showThreshold) {
+                object.classList.add('visible');
+            } else if (!exploded) {
+                object.classList.remove('visible');
+            }
+            
+            const range = Math.max(skillsTop - heroBottom, 1);
+            const progress = Math.min(Math.max((y - heroBottom) / range, 0), 1);
+            
+            const rotateDeg = progress * 720; // two full spins
+            const yOffset = (progress - 0.5) * 60; // small vertical drift
+            object.style.transform = `translate(-50%, calc(-50% + ${yOffset}px)) rotate(${rotateDeg}deg)`;
+            
+            // آماده‌سازی بخش مهارت‌ها کمی قبل از رسیدن
+            const nearSkillsThreshold = skillsTop - window.innerHeight * 0.35;
+            if (!exploded && y > nearSkillsThreshold && !skills.classList.contains('prepare')) {
+                skills.classList.add('prepare');
+                // اطمینان از مخفی بودن اولیه آیتم‌ها قبل از reveal
+                skillItems.forEach(el => el.classList.remove('revealed'));
+            }
+
+            // Trigger explosion near skills
+            if (!exploded && y > skillsTop - window.innerHeight * 0.2) {
+                exploded = true;
+                object.classList.add('explode');
+                object.addEventListener('animationend', () => {
+                    object.classList.remove('visible');
+                    object.style.opacity = '0';
+                }, { once: true });
+                
+                // Progressive reveal for skills
+                skillItems.forEach((el, i) => {
+                    setTimeout(() => el.classList.add('revealed'), i * 70);
+                });
+            }
+        };
+
+        window.addEventListener('scroll', compute, { passive: true });
+        window.addEventListener('resize', compute);
+        compute();
+    } catch (err) {
+        console.error('ScrollingObject init error:', err);
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize existing functions
     initSmoothScrolling();
@@ -1892,6 +2025,76 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 500);
     
     initFormHandling();
+    initParallax();
+    initScrollingObject();
+    initScrollReveal();
 
 });
+
+// Scroll-based reveal animation system
+function initScrollReveal() {
+    try {
+        const allRevealNodes = Array.from(document.querySelectorAll('[data-reveal]'));
+        if (!allRevealNodes.length) return;
+
+        // Cleanup: remove legacy one-shot classes that lock visibility
+        allRevealNodes.forEach(el => {
+            el.classList.remove('visible', 'fade-in');
+        });
+
+        // Annotate all reveal nodes with base class and delay
+        allRevealNodes.forEach(el => {
+            el.classList.add('reveal');
+            const delay = el.getAttribute('data-reveal-delay');
+            if (delay) el.style.transitionDelay = `${parseFloat(delay)}ms`;
+        });
+
+        // Section-level gating: only re-trigger animations when the section fully exits and re-enters
+        const sections = Array.from(document.querySelectorAll('section[data-reveal-section]'));
+        const sectionChildrenMap = new Map();
+        sections.forEach(sec => {
+            const children = Array.from(sec.querySelectorAll('[data-reveal]'));
+            sectionChildrenMap.set(sec, children);
+        });
+
+        // Observe elements NOT inside a gated section (hero, skills, etc.)
+        const elementNodes = allRevealNodes.filter(el => !el.closest('section[data-reveal-section]'));
+        const ioElements = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const el = entry.target;
+                if (entry.isIntersecting) {
+                    el.classList.add('in-view');
+                } else {
+                    el.classList.remove('in-view');
+                }
+            });
+        }, { threshold: 0.25, rootMargin: '-10% 0px' });
+        elementNodes.forEach(el => ioElements.observe(el));
+
+        // Per-section observers with configurable enter threshold and rootMargin
+        sections.forEach(sec => {
+            const children = sectionChildrenMap.get(sec) || [];
+            const enterThresholdAttr = parseFloat(sec.getAttribute('data-reveal-enter-threshold'));
+            const enterThreshold = isNaN(enterThresholdAttr) ? 0.35 : enterThresholdAttr; // default 35%
+            const rootMarginAttr = sec.getAttribute('data-reveal-root-margin');
+            const rootMarginVal = rootMarginAttr || '0px 0px -15% 0px';
+
+            const ioSec = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.target !== sec) return;
+                    const ratio = entry.intersectionRatio;
+                    if (ratio >= enterThreshold) {
+                        children.forEach(el => el.classList.add('in-view'));
+                    } else if (ratio === 0) {
+                        children.forEach(el => el.classList.remove('in-view'));
+                    }
+                });
+            }, { threshold: [0, enterThreshold], rootMargin: rootMarginVal });
+
+            ioSec.observe(sec);
+        });
+    } catch (err) {
+        console.error('ScrollReveal init error:', err);
+    }
+}
 

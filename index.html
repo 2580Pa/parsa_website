@@ -42,13 +42,6 @@
                 <a href="#education" class="nav-link" data-section="3" data-translate="nav-education">Education</a>
                 <a href="#portfolio" class="nav-link" data-section="4" data-translate="nav-portfolio">Portfolio</a>
                 <a href="#contact" class="nav-link" data-section="5" data-translate="nav-contact">Contact</a>
-                <!-- Mobile-only resume entries to keep access inside the drawer -->
-                <a href="resume.pdf" target="_blank" rel="noopener" class="nav-link resume-view">
-                    <span data-translate="resume-view-text">مشاهده آنلاین</span>
-                </a>
-                <a href="resume.pdf" download class="nav-link resume-download">
-                    <span data-translate="resume-download-text">دانلود رزومه</span>
-                </a>
             </div>
             <div class="resume-dropdown">
                 <button class="resume-toggle" id="resume-toggle" data-translate="nav-resume">برسی رزومه</button>
@@ -86,74 +79,82 @@
 
     <!-- Hero Section -->
     <section id="home" class="hero">
+        <!-- Parallax layers for hero -->
+        <div class="parallax-layer layer-bg" data-depth="0.15"></div>
+        <div class="parallax-layer layer-fg" data-depth="0.45"></div>
         <div class="hero-background">
             <div class="stars"></div>
             <div class="mountains"></div>
             <div class="floating-icons">
-                <i class="fab fa-react"></i>
-                <i class="fab fa-js-square"></i>
-                <i class="fab fa-html5"></i>
-                <i class="fab fa-css3-alt"></i>
-                <i class="fab fa-node-js"></i>
-                <i class="fab fa-git-alt"></i>
+                <i class="fa-brands fa-react"></i>
+                <i class="fa-brands fa-js"></i>
+                <i class="fa-brands fa-html5"></i>
+                <i class="fa-brands fa-css3-alt"></i>
+                <i class="fa-brands fa-node-js"></i>
+                <i class="fa-brands fa-git-alt"></i>
             </div>
         </div>
         <div class="hero-content">
             <div class="hero-text">
                 <h1 class="hero-title">
-                    <span class="title-line" data-translate="hero-welcome">خوش آمدید به</span>
-                    <span class="title-line highlight" data-translate="hero-website">وب‌سایت من!</span>
+                    <span class="title-line" data-reveal data-reveal-delay="50" data-translate="hero-welcome">خوش آمدید به</span>
+                    <span class="title-line highlight" data-reveal data-reveal-delay="150" data-translate="hero-website">وب‌سایت من!</span>
                 </h1>
                 <h2 class="hero-subtitle">
-                    <span class="subtitle-line" data-translate="hero-frontend">برنامه‌نویس</span>
-                    <span class="subtitle-line" data-translate="hero-developer">فرانت‌اند</span>
+                    <span class="subtitle-line" data-reveal data-reveal-delay="250" data-translate="hero-frontend">برنامه‌نویس</span>
+                    <span class="subtitle-line" data-reveal data-reveal-delay="350" data-translate="hero-developer">فرانت‌اند</span>
                 </h2>
                 <div class="hero-buttons">
-                    <a href="#portfolio" class="btn btn-primary" data-translate="hero-see-works">مشاهده کارها</a>
-                    <a href="#contact" class="btn btn-secondary" data-translate="hero-contact">تماس با من</a>
+                    <a href="#portfolio" class="btn btn-primary" data-reveal data-reveal-delay="450" data-translate="hero-see-works">مشاهده کارها</a>
+                    <a href="#contact" class="btn btn-secondary" data-reveal data-reveal-delay="550" data-translate="hero-contact">تماس با من</a>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Floating React icon for scroll storytelling -->
+    <div id="scrollingObject" class="scrolling-object" aria-hidden="true">
+        <i class="fa-brands fa-react"></i>
+    </div>
+
     <!-- About Section -->
     <section id="about" class="about">
         <div class="container">
-            <h2 class="section-title" data-translate="about-title">About Me</h2>
+            <h2 class="section-title" data-translate="about-title" data-reveal data-reveal-delay="50">About Me</h2>
             <div class="about-content">
                 <div class="about-text">
-                    <p class="about-description" data-translate="about-description">
+                    <p class="about-description" data-translate="about-description" data-reveal data-reveal-delay="100">
                         Young and motivated developer proficient in HTML, CSS, and JavaScript with familiarity in React and Git. Passionate about solving problems, learning new technologies quickly, and ready to collaborate on real projects while growing within professional teams.
                     </p>
                     <div class="about-traits">
-                        <div class="trait">
+                        <div class="trait" data-reveal data-reveal-delay="150">
                             <i class="fas fa-graduation-cap"></i>
                             <span data-translate="trait-learner">Eager Learner</span>
                         </div>
-                        <div class="trait">
+                        <div class="trait" data-reveal data-reveal-delay="200">
                             <i class="fas fa-heart"></i>
                             <span data-translate="trait-passionate">Passionate</span>
                         </div>
-                        <div class="trait">
+                        <div class="trait" data-reveal data-reveal-delay="250">
                             <i class="fas fa-puzzle-piece"></i>
                             <span data-translate="trait-problem-solver">Problem Solver</span>
                         </div>
-                        <div class="trait">
+                        <div class="trait" data-reveal data-reveal-delay="300">
                             <i class="fas fa-palette"></i>
                             <span data-translate="trait-creative">Creative</span>
                         </div>
-                        <div class="trait">
+                        <div class="trait" data-reveal data-reveal-delay="350">
                             <i class="fas fa-users"></i>
                             <span data-translate="trait-teamwork">Team Player</span>
                         </div>
-                        <div class="trait">
+                        <div class="trait" data-reveal data-reveal-delay="400">
                             <i class="fas fa-sync-alt"></i>
                             <span data-translate="trait-flexible">Adaptable</span>
                         </div>
                     </div>
                 </div>
                 <div class="about-visual">
-                    <div class="profile-card">
+                    <div class="profile-card" data-reveal data-reveal-delay="150">
                         <div class="card-header">
                             <div class="profile-avatar">
                                 <img src="Asset 9-100.jpg" alt="Parsa Nikoonahad" class="profile-photo">
@@ -164,15 +165,15 @@
                             </div>
                         </div>
                         <div class="card-content">
-                            <div class="info-item">
+                            <div class="info-item" data-reveal data-reveal-delay="200">
                                 <i class="fas fa-map-marker-alt"></i>
                                 <span data-translate="profile-location">Yazd, Iran</span>
                             </div>
-                            <div class="info-item">
+                            <div class="info-item" data-reveal data-reveal-delay="250">
                                 <i class="fas fa-envelope"></i>
                                 <span data-translate="profile-email">parsa.nikoonahad2000@gmail.com</span>
                             </div>
-                            <div class="info-item">
+                            <div class="info-item" data-reveal data-reveal-delay="300">
                                 <i class="fas fa-phone"></i>
                                 <span data-translate="profile-phone">+98 919 409 7202</span>
                             </div>
@@ -185,46 +186,49 @@
 
     <!-- Skills Section -->
     <section id="skills" class="skills">
+        <!-- Parallax layers for skills -->
+        <div class="parallax-layer layer-bg" data-depth="0.12"></div>
+        <div class="parallax-layer layer-fg" data-depth="0.4"></div>
         <div class="container">
             <h2 class="section-title" data-translate="skills-title">My Skills</h2>
-            <div class="skills-grid">
+            <div class="skills-grid" data-reveal>
                 <div class="skill-category">
-                    <h3 data-translate="skills-frontend">Frontend</h3>
+                    <h3 data-reveal data-translate="skills-frontend">Frontend</h3>
                     <div class="skill-items">
-                        <div class="skill-item">
-                            <i class="fab fa-html5"></i>
+                        <div class="skill-item" data-reveal data-reveal-delay="50">
+                            <i class="fa-brands fa-html5"></i>
                             <span>HTML5</span>
                         </div>
-                        <div class="skill-item">
-                            <i class="fab fa-css3-alt"></i>
+                        <div class="skill-item" data-reveal data-reveal-delay="120">
+                            <i class="fa-brands fa-css3-alt"></i>
                             <span>CSS3</span>
                         </div>
-                        <div class="skill-item">
-                            <i class="fab fa-js-square"></i>
+                        <div class="skill-item" data-reveal data-reveal-delay="190">
+                            <i class="fa-brands fa-js"></i>
                             <span>JavaScript</span>
                         </div>
-                        <div class="skill-item">
-                            <i class="fab fa-react"></i>
+                        <div class="skill-item" data-reveal data-reveal-delay="260">
+                            <i class="fa-brands fa-react"></i>
                             <span>React.js</span>
                         </div>
                     </div>
                 </div>
                 <div class="skill-category">
-                    <h3 data-translate="skills-tools">Tools & Technologies</h3>
+                    <h3 data-reveal data-translate="skills-tools">Tools & Technologies</h3>
                     <div class="skill-items">
-                        <div class="skill-item">
-                            <i class="fab fa-git-alt"></i>
+                        <div class="skill-item" data-reveal data-reveal-delay="50">
+                            <i class="fa-brands fa-git-alt"></i>
                             <span>Git</span>
                         </div>
-                        <div class="skill-item">
-                            <i class="fab fa-github"></i>
+                        <div class="skill-item" data-reveal data-reveal-delay="120">
+                            <i class="fa-brands fa-github"></i>
                             <span>GitHub</span>
                         </div>
-                        <div class="skill-item">
+                        <div class="skill-item" data-reveal data-reveal-delay="190">
                             <i class="fas fa-mobile-alt"></i>
                             <span>Responsive Design</span>
                         </div>
-                        <div class="skill-item">
+                        <div class="skill-item" data-reveal data-reveal-delay="260">
                             <i class="fas fa-search"></i>
                             <span>SEO</span>
                         </div>
@@ -235,11 +239,11 @@
     </section>
 
     <!-- Education Section -->
-    <section id="education" class="education">
+    <section id="education" class="education" data-reveal-section="education">
         <div class="container">
-            <h2 class="section-title" data-translate="education-title">Education & Certifications</h2>
+            <h2 class="section-title" data-translate="education-title" data-reveal data-reveal-delay="50">Education & Certifications</h2>
             <div class="education-timeline">
-                <div class="timeline-item">
+                <div class="timeline-item" data-reveal data-reveal-delay="120" class="timeline-item reveal-left">
                     <div class="timeline-marker"></div>
                     <div class="timeline-content">
                         <h3 data-translate="education-degree">11th Grade - Network & Software</h3>
@@ -250,7 +254,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="timeline-item">
+                <div class="timeline-item reveal-right" data-reveal data-reveal-delay="190">
                     <div class="timeline-marker"></div>
                     <div class="timeline-content">
                         <h3 data-translate="cert-react">React.js Certification</h3>
@@ -262,7 +266,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="timeline-item">
+                <div class="timeline-item reveal-left" data-reveal data-reveal-delay="260">
                     <div class="timeline-marker"></div>
                     <div class="timeline-content">
                         <h3 data-translate="cert-js">JavaScript Certification</h3>
@@ -281,9 +285,9 @@
     <!-- Portfolio Section -->
     <section id="portfolio" class="portfolio">
         <div class="container">
-            <h2 class="section-title" data-translate="portfolio-title">My Portfolio</h2>
+            <h2 class="section-title" data-translate="portfolio-title" data-reveal data-reveal-delay="50">My Portfolio</h2>
             <div class="portfolio-grid">
-                <div class="portfolio-item">
+                <div class="portfolio-item" data-reveal data-reveal-delay="120">
                     <div class="portfolio-image">
                         <div class="project-preview">
                             <i class="fas fa-graduation-cap"></i>
@@ -307,7 +311,7 @@
                         <a href="https://inteladvisor.ir/" class="btn btn-primary" target="_blank" rel="noopener" data-translate="project-view">View Project</a>
                     </div>
                 </div>
-                <div class="portfolio-item">
+                <div class="portfolio-item" data-reveal data-reveal-delay="200">
                     <div class="portfolio-image">
                         <div class="project-preview">
                             <i class="fas fa-tasks"></i>
@@ -339,12 +343,12 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="contact">
+    <section id="contact" class="contact" data-reveal-section="contact" data-reveal-enter-threshold="0.25" data-reveal-root-margin="0px 0px -8% 0px">
         <div class="container">
-            <h2 class="section-title" data-translate="contact-title">تماس با من</h2>
+            <h2 class="section-title" data-translate="contact-title" data-reveal data-reveal-delay="50">تماس با من</h2>
             <div class="contact-content">
                 <div class="contact-info">
-                    <div class="contact-item email-item" data-email="parsa.nikoonahad2000@gmail.com">
+                    <div class="contact-item email-item" data-email="parsa.nikoonahad2000@gmail.com" data-reveal data-reveal-delay="120">
                         <i class="fas fa-envelope"></i>
                         <div>
                             <h3 data-translate="contact-email">Email</h3>
@@ -359,7 +363,7 @@
                             </button>
                         </div>
                     </div>
-                    <div class="contact-item phone-item" data-phone="+989194097202">
+                    <div class="contact-item phone-item" data-phone="+989194097202" data-reveal data-reveal-delay="180">
                         <i class="fas fa-phone"></i>
                         <div>
                             <h3 data-translate="contact-phone">Phone</h3>
@@ -374,7 +378,7 @@
                             </button>
                         </div>
                     </div>
-                    <div class="contact-item telegram-item" data-telegram="@parsa_nik00">
+                    <div class="contact-item telegram-item" data-telegram="@parsa_nik00" data-reveal data-reveal-delay="240">
                         <i class="fab fa-telegram"></i>
                         <div>
                             <h3 data-translate="contact-telegram">Telegram</h3>
@@ -386,7 +390,7 @@
                             </button>
                         </div>
                     </div>
-                    <div class="contact-item instagram-item" data-instagram="@parsa_nik0">
+                    <div class="contact-item instagram-item" data-instagram="@parsa_nik0" data-reveal data-reveal-delay="300">
                         <i class="fab fa-instagram"></i>
                         <div>
                             <h3 data-translate="contact-instagram">Instagram</h3>
@@ -400,31 +404,31 @@
                     </div>
                 </div>
                 <div class="contact-form">
-                    <form id="contact-form">
+                    <form id="contact-form" data-reveal data-reveal-delay="150">
                         <div class="form-group">
-                            <input type="text" id="name" name="name" placeholder="Your Name" data-translate-placeholder="contact-name" required>
+                            <input type="text" id="name" name="name" placeholder="Your Name" data-translate-placeholder="contact-name" required data-reveal data-reveal-delay="100">
                         </div>
                         <div class="form-group">
-                            <input type="email" id="email" name="email" placeholder="Your Email" data-translate-placeholder="contact-email-placeholder" required>
+                            <input type="email" id="email" name="email" placeholder="Your Email" data-translate-placeholder="contact-email-placeholder" required data-reveal data-reveal-delay="150">
                         </div>
                         <div class="form-group">
-                            <textarea id="message" name="message" placeholder="Your Message" data-translate-placeholder="contact-message" rows="5" required></textarea>
+                            <textarea id="message" name="message" placeholder="Your Message" data-translate-placeholder="contact-message" rows="5" required data-reveal data-reveal-delay="200"></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary" data-translate="contact-send">Send Message</button>
+                        <button type="submit" class="btn btn-primary" data-translate="contact-send" data-reveal data-reveal-delay="250">Send Message</button>
                     </form>
                 </div>
             </div>
-            <div class="social-links">
-                <a href="#" class="social-link">
+            <div class="social-links" data-reveal data-reveal-delay="100">
+                <a href="#" class="social-link" data-reveal data-reveal-delay="120">
                     <i class="fab fa-linkedin"></i>
                 </a>
-                <a href="#" class="social-link">
+                <a href="#" class="social-link" data-reveal data-reveal-delay="180">
                     <i class="fab fa-github"></i>
                 </a>
-                <a href="https://t.me/parsa_nik00" target="_blank" class="social-link telegram-link" title="تلگرام">
+                <a href="https://t.me/parsa_nik00" target="_blank" class="social-link telegram-link" title="تلگرام" data-reveal data-reveal-delay="240">
                     <i class="fab fa-telegram"></i>
                 </a>
-                <a href="https://instagram.com/parsa_nik0" target="_blank" class="social-link instagram-link" title="اینستاگرام">
+                <a href="https://instagram.com/parsa_nik0" target="_blank" class="social-link instagram-link" title="اینستاگرام" data-reveal data-reveal-delay="300">
                     <i class="fab fa-instagram"></i>
                 </a>
             </div>
