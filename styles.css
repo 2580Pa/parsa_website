@@ -969,6 +969,19 @@ section {
     opacity: 0.8;
 }
 
+/* Demo project specific styling */
+.demo-barbershop {
+    background: linear-gradient(135deg, #1a1a1a 0%, #8b7355 100%);
+}
+
+.demo-clinic {
+    background: linear-gradient(135deg, #0066cc 0%, #00b4d8 100%);
+}
+
+.demo-tutor {
+    background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+}
+
 .portfolio-overlay {
     position: absolute;
     top: 0;
