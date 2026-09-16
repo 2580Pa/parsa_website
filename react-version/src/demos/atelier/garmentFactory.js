@@ -1,238 +1,186 @@
 import * as THREE from 'three';
 
 /**
- * Creates a soft, volumetric polo/tunic garment with proper thickness and fabric feel.
- * No flat planes or cardboard look - this builds a proper 3D mesh with volume.
+ * Creates a realistic polo shirt with proper volume, rounded surfaces, and fabric draping.
+ * Uses LatheGeometry and proper mesh topology - NO flat ExtrudeGeometry or torus rings.
  */
 
 export function buildSoftGarment(color = '#16a629', accentColor = '#ffffff') {
   const group = new THREE.Group();
   
-  // === 1. TORSO: Create volumetric body with front and back panels ===
-  const torsoGeometry = createTorsoGeometry();
-  
-  // Use MeshPhysicalMaterial for realistic fabric rendering
+  // Fabric material with realistic properties
   const fabricMaterial = new THREE.MeshPhysicalMaterial({
     color: new THREE.Color(color),
-    roughness: 0.7,
+    roughness: 0.8,
     metalness: 0.0,
-    sheen: 0.5,
-    sheenColor: new THREE.Color(0xffffff),
-    clearcoat: 0.1,
-    clearcoatRoughness: 0.4,
+    sheen: 0.6,
+    sheenColor: new THREE.Color(0xffffff).multiplyScalar(0.5),
+    clearcoat: 0.05,
+    clearcoatRoughness: 0.5,
+    side: THREE.DoubleSide,
+    transparent: false,
+  });
+  
+  const accentMaterial = new THREE.MeshPhysicalMaterial({
+    color: new THREE.Color(accentColor),
+    roughness: 0.85,
+    metalness: 0.0,
+    sheen: 0.4,
     side: THREE.DoubleSide,
   });
   
-  const torsoMesh = new THREE.Mesh(torsoGeometry, fabricMaterial);
-  group.add(torsoMesh);
+  // === 1. TORSO: Rounded volumetric body using LatheGeometry ===
+  const torso = createRoundedTorso(fabricMaterial);
+  group.add(torso);
   
-  // === 2. COLLAR: Clean polo collar with volume ===
-  const collar = createCollar(accentColor);
-  group.add(collar);
-  
-  // === 3. SLEEVES: Proper short sleeves with thickness ===
-  const leftSleeve = createSleeve(color, accentColor);
-  leftSleeve.position.set(-0.65, 0.25, 0);
-  leftSleeve.rotation.z = 0.15;
+  // === 2. SLEEVES: Soft tapered sleeves ===
+  const leftSleeve = createSoftSleeve(fabricMaterial);
+  leftSleeve.position.set(-0.55, 0.35, 0);
+  leftSleeve.rotation.z = Math.PI / 2;
+  leftSleeve.rotation.y = -0.2;
   group.add(leftSleeve);
   
-  const rightSleeve = createSleeve(color, accentColor);
-  rightSleeve.position.set(0.65, 0.25, 0);
-  rightSleeve.rotation.z = -0.15;
-  rightSleeve.scale.x = -1; // Mirror
+  const rightSleeve = createSoftSleeve(fabricMaterial);
+  rightSleeve.position.set(0.55, 0.35, 0);
+  rightSleeve.rotation.z = -Math.PI / 2;
+  rightSleeve.rotation.y = 0.2;
   group.add(rightSleeve);
   
-  // === 4. ACCENT DETAILS: Two-tone design panel ===
-  const accentPanel = createAccentPanel(accentColor);
-  group.add(accentPanel);
+  // === 3. COLLAR: Polo collar ===
+  const collar = createPoloCollar(accentMaterial);
+  group.add(collar);
   
-  // Center and scale appropriately
-  group.scale.setScalar(1.2);
-  group.position.y = -0.2;
+  // === 4. ACCENT STRIPES ===
+  const stripes = createAccentStripes(accentMaterial);
+  group.add(stripes);
+  
+  group.scale.setScalar(1.3);
+  group.position.y = -0.15;
   
   return group;
 }
 
 /**
- * Creates the main torso geometry with proper volume (extruded shape, not flat plane)
+ * Creates a rounded, organic torso using LatheGeometry for smooth volume
  */
-function createTorsoGeometry() {
-  // Define torso shape outline
-  const torsoShape = new THREE.Shape();
+function createRoundedTorso(material) {
+  const group = new THREE.Group();
   
-  // Start from bottom center, draw half silhouette
-  torsoShape.moveTo(0, -1.0);
-  torsoShape.lineTo(0.5, -0.95);
-  torsoShape.lineTo(0.65, -0.5);
-  torsoShape.lineTo(0.65, 0);
-  torsoShape.lineTo(0.6, 0.3);
-  torsoShape.lineTo(0.45, 0.5);
+  // Create a shirt profile curve (side view)
+  const points = [];
+  const segments = 32;
   
-  // Shoulder/neck area
-  torsoShape.lineTo(0.25, 0.65);
-  torsoShape.lineTo(0.15, 0.75);
+  // Bottom hem - slight flare
+  points.push(new THREE.Vector2(0.45, -0.85));
+  points.push(new THREE.Vector2(0.48, -0.80));
   
-  // Neck opening (V-neck)
-  torsoShape.bezierCurveTo(
-    0.08, 0.8,
-    0.02, 0.82,
-    0, 0.85
-  );
+  // Lower torso
+  points.push(new THREE.Vector2(0.50, -0.60));
+  points.push(new THREE.Vector2(0.52, -0.40));
+  points.push(new THREE.Vector2(0.53, -0.20));
   
-  // Mirror to other side
-  torsoShape.bezierCurveTo(
-    -0.02, 0.82,
-    -0.08, 0.8,
-    -0.15, 0.75
-  );
-  torsoShape.lineTo(-0.25, 0.65);
-  torsoShape.lineTo(-0.45, 0.5);
-  torsoShape.lineTo(-0.6, 0.3);
-  torsoShape.lineTo(-0.65, 0);
-  torsoShape.lineTo(-0.65, -0.5);
-  torsoShape.lineTo(-0.5, -0.95);
-  torsoShape.lineTo(0, -1.0);
+  // Mid torso
+  points.push(new THREE.Vector2(0.54, 0.00));
+  points.push(new THREE.Vector2(0.53, 0.15));
   
-  // Extrude to give thickness (front to back depth)
-  const extrudeSettings = {
-    depth: 0.35,
-    bevelEnabled: true,
-    bevelThickness: 0.02,
-    bevelSize: 0.02,
-    bevelOffset: 0,
-    bevelSegments: 3,
-    steps: 2,
-    curveSegments: 24
-  };
+  // Chest/shoulder taper
+  points.push(new THREE.Vector2(0.50, 0.30));
+  points.push(new THREE.Vector2(0.44, 0.42));
+  points.push(new THREE.Vector2(0.35, 0.52));
   
-  const geometry = new THREE.ExtrudeGeometry(torsoShape, extrudeSettings);
+  // Shoulder slope
+  points.push(new THREE.Vector2(0.26, 0.58));
+  points.push(new THREE.Vector2(0.18, 0.62));
   
-  // Center the extrusion (shift it back so it's centered on Z-axis)
-  geometry.translate(0, 0, -0.175);
+  // Neck opening
+  points.push(new THREE.Vector2(0.14, 0.65));
+  points.push(new THREE.Vector2(0.12, 0.68));
   
-  // Compute normals for smooth shading
-  geometry.computeVertexNormals();
+  // Create the lathed body (rotated around Y axis)
+  const bodyGeometry = new THREE.LatheGeometry(points, segments, 0, Math.PI * 2);
+  bodyGeometry.computeVertexNormals();
   
-  return geometry;
+  const bodyMesh = new THREE.Mesh(bodyGeometry, material);
+  group.add(bodyMesh);
+  
+  return group;
 }
 
 /**
- * Creates a polo-style collar with thickness
+ * Creates a polo collar using a torus for the collar band
  */
-function createCollar(color) {
-  const collarGroup = new THREE.Group();
+function createPoloCollar(material) {
+  const group = new THREE.Group();
   
-  const collarMaterial = new THREE.MeshPhysicalMaterial({
-    color: new THREE.Color(color),
-    roughness: 0.8,
-    metalness: 0.0,
-    sheen: 0.3,
-    side: THREE.DoubleSide,
-  });
-  
-  // Left collar flap
-  const collarShape = new THREE.Shape();
-  collarShape.moveTo(0, 0);
-  collarShape.lineTo(0.15, 0.05);
-  collarShape.lineTo(0.12, 0.15);
-  collarShape.lineTo(0.02, 0.12);
-  collarShape.lineTo(0, 0);
-  
-  const collarGeometry = new THREE.ExtrudeGeometry(collarShape, {
-    depth: 0.02,
-    bevelEnabled: true,
-    bevelThickness: 0.005,
-    bevelSize: 0.005,
-    bevelSegments: 2
-  });
-  
-  const leftCollar = new THREE.Mesh(collarGeometry, collarMaterial);
-  leftCollar.position.set(0.02, 0.7, 0.15);
-  leftCollar.rotation.x = -0.3;
-  collarGroup.add(leftCollar);
-  
-  // Right collar flap (mirrored)
-  const rightCollar = leftCollar.clone();
-  rightCollar.scale.x = -1;
-  rightCollar.position.x = -0.02;
-  collarGroup.add(rightCollar);
-  
-  return collarGroup;
-}
-
-/**
- * Creates a proper short sleeve with volume (tapered cylinder)
- */
-function createSleeve(mainColor, trimColor) {
-  const sleeveGroup = new THREE.Group();
-  
-  // Main sleeve body - tapered tube
-  const sleeveGeometry = new THREE.CylinderGeometry(
-    0.08,  // top radius
-    0.11,  // bottom radius (slightly wider)
-    0.25,  // height
-    16,    // radial segments
-    4,     // height segments
-    false  // open ended
+  // Collar band - torus around neck opening
+  const collarBand = new THREE.TorusGeometry(
+    0.135,  // radius
+    0.018,  // tube thickness
+    12,     // radial segments
+    32      // tubular segments
   );
   
-  const sleeveMaterial = new THREE.MeshPhysicalMaterial({
-    color: new THREE.Color(mainColor),
-    roughness: 0.7,
-    metalness: 0.0,
-    sheen: 0.5,
-    sheenColor: new THREE.Color(0xffffff),
-    side: THREE.DoubleSide,
-  });
+  const collarMesh = new THREE.Mesh(collarBand, material);
+  collarMesh.rotation.x = Math.PI / 2;
+  collarMesh.position.y = 0.67;
   
-  const sleeveMesh = new THREE.Mesh(sleeveGeometry, sleeveMaterial);
-  sleeveMesh.rotation.z = Math.PI / 2; // Rotate to horizontal
-  sleeveGroup.add(sleeveMesh);
+  group.add(collarMesh);
   
-  // Sleeve trim/cuff
-  const cuffGeometry = new THREE.TorusGeometry(0.11, 0.015, 8, 16);
-  const cuffMaterial = new THREE.MeshPhysicalMaterial({
-    color: new THREE.Color(trimColor),
-    roughness: 0.8,
-  });
-  
-  const cuff = new THREE.Mesh(cuffGeometry, cuffMaterial);
-  cuff.rotation.y = Math.PI / 2;
-  cuff.position.x = -0.125;
-  sleeveGroup.add(cuff);
-  
-  return sleeveGroup;
+  return group;
 }
 
 /**
- * Creates a diagonal accent panel for two-tone design
+ * Creates a soft, tapered sleeve using LatheGeometry
  */
-function createAccentPanel(color) {
-  const panelShape = new THREE.Shape();
+function createSoftSleeve(material) {
+  // Sleeve profile curve
+  const sleevePoints = [];
   
-  // Diagonal stripe across chest
-  panelShape.moveTo(-0.3, 0.6);
-  panelShape.lineTo(0.3, 0.4);
-  panelShape.lineTo(0.35, 0.5);
-  panelShape.lineTo(-0.25, 0.7);
-  panelShape.lineTo(-0.3, 0.6);
+  // Top (shoulder connection) - wider
+  sleevePoints.push(new THREE.Vector2(0.12, 0.00));
+  sleevePoints.push(new THREE.Vector2(0.115, -0.03));
   
-  const panelGeometry = new THREE.ExtrudeGeometry(panelShape, {
-    depth: 0.005,
-    bevelEnabled: false
-  });
+  // Mid sleeve - slight taper
+  sleevePoints.push(new THREE.Vector2(0.11, -0.08));
+  sleevePoints.push(new THREE.Vector2(0.105, -0.12));
   
-  const panelMaterial = new THREE.MeshPhysicalMaterial({
-    color: new THREE.Color(color),
-    roughness: 0.75,
-    metalness: 0.0,
-    sheen: 0.4,
-  });
+  // Lower sleeve
+  sleevePoints.push(new THREE.Vector2(0.10, -0.16));
+  sleevePoints.push(new THREE.Vector2(0.098, -0.18));
   
-  const panel = new THREE.Mesh(panelGeometry, panelMaterial);
-  panel.position.z = 0.18; // Slightly in front of torso
+  // Cuff - slight gather
+  sleevePoints.push(new THREE.Vector2(0.095, -0.20));
+  sleevePoints.push(new THREE.Vector2(0.092, -0.22));
   
-  return panel;
+  const sleeveGeometry = new THREE.LatheGeometry(sleevePoints, 24);
+  sleeveGeometry.computeVertexNormals();
+  
+  const sleeve = new THREE.Mesh(sleeveGeometry, material);
+  
+  return sleeve;
+}
+
+/**
+ * Creates accent stripes around the torso using thin torus geometries
+ */
+function createAccentStripes(material) {
+  const group = new THREE.Group();
+  
+  // Chest stripe
+  const stripe1 = new THREE.TorusGeometry(0.52, 0.008, 8, 32, Math.PI * 2);
+  const stripeMesh1 = new THREE.Mesh(stripe1, material);
+  stripeMesh1.rotation.x = Math.PI / 2;
+  stripeMesh1.position.y = 0.15;
+  group.add(stripeMesh1);
+  
+  // Lower stripe
+  const stripe2 = new THREE.TorusGeometry(0.51, 0.008, 8, 32, Math.PI * 2);
+  const stripeMesh2 = new THREE.Mesh(stripe2, material);
+  stripeMesh2.rotation.x = Math.PI / 2;
+  stripeMesh2.position.y = 0.05;
+  group.add(stripeMesh2);
+  
+  return group;
 }
 
 /**

@@ -7,7 +7,7 @@ import { buildSoftGarment, generateColorPalette } from './garmentFactory';
  */
 
 let thumbnailCache = null;
-let cacheVersion = 2; // Bump this to invalidate old cardboard thumbnails
+let cacheVersion = 3; // Bump this to invalidate old cardboard thumbnails
 
 export function generateGarmentThumbnails(count = 8) {
   const cacheKey = `atelier_thumbs_v${cacheVersion}_${count}`;
