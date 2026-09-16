@@ -36,7 +36,7 @@ export function generateGarmentThumbnails(count = 8) {
   renderer.setSize(width, height);
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.2;
-  renderer.outputEncoding = THREE.sRGBEncoding;
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
   
   // Lighting setup (same quality as hero)
   const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);

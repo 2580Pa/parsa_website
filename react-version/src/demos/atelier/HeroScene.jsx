@@ -37,7 +37,7 @@ export default function HeroScene({ onColorChange, currentGarment }) {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.2;
-    renderer.outputEncoding = THREE.sRGBEncoding;
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
     
     mountRef.current.appendChild(renderer.domElement);
     
