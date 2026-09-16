@@ -38,141 +38,44 @@ export function buildSoftGarment(color = '#16a629', accentColor = '#ffffff') {
 }
 
 /**
- * Creates a proper t-shirt mesh with clothing topology
+ * Creates a t-shirt using basic boxes for clear shirt silhouette
  */
 function createTShirt(bodyMaterial, trimMaterial) {
   const group = new THREE.Group();
   
-  // === TORSO: Create front and back panels ===
-  const torso = createTorsoMesh(bodyMaterial);
+  // Main torso - rectangular, shirt-like proportions
+  const torsoGeometry = new THREE.BoxGeometry(1.2, 1.4, 0.3);
+  const torso = new THREE.Mesh(torsoGeometry, bodyMaterial);
+  torso.position.y = -0.1;
   group.add(torso);
   
-  // === SLEEVES: Short sleeves extending from shoulders ===
-  const leftSleeve = createSleeveMesh(bodyMaterial);
-  leftSleeve.position.set(-0.7, 0.4, 0);
-  leftSleeve.rotation.z = -Math.PI / 6; // Angle down slightly
+  // Left sleeve - clearly extending from shoulder
+  const sleeveGeometry = new THREE.BoxGeometry(0.4, 0.3, 0.25);
+  const leftSleeve = new THREE.Mesh(sleeveGeometry, bodyMaterial);
+  leftSleeve.position.set(-0.8, 0.4, 0);
   group.add(leftSleeve);
   
-  const rightSleeve = createSleeveMesh(bodyMaterial);
-  rightSleeve.position.set(0.7, 0.4, 0);
-  rightSleeve.rotation.z = Math.PI / 6;
+  // Right sleeve
+  const rightSleeve = new THREE.Mesh(sleeveGeometry, bodyMaterial);
+  rightSleeve.position.set(0.8, 0.4, 0);
   group.add(rightSleeve);
   
-  // === COLLAR: Simple crew neck ===
-  const collar = createCrewNeck(trimMaterial);
-  group.add(collar);
+  // Neck opening
+  const neckGeometry = new THREE.BoxGeometry(0.3, 0.15, 0.32);
+  const neck = new THREE.Mesh(neckGeometry, trimMaterial);
+  neck.position.y = 0.65;
+  group.add(neck);
   
-  // === ACCENT: Horizontal chest stripe ===
-  const stripe = createChestStripe(trimMaterial);
+  // Chest stripe
+  const stripeGeometry = new THREE.BoxGeometry(1.15, 0.08, 0.31);
+  const stripe = new THREE.Mesh(stripeGeometry, trimMaterial);
+  stripe.position.set(0, 0.2, 0);
   group.add(stripe);
   
   return group;
 }
 
-/**
- * Creates torso with proper shirt proportions
- */
-function createTorsoMesh(material) {
-  const geometry = new THREE.BufferGeometry();
-  const vertices = [];
-  const indices = [];
-  
-  // Define shirt outline: shoulders wider, tapers to hem
-  const rows = 16;
-  const cols = 24;
-  
-  for (let row = 0; row < rows; row++) {
-    const v = row / (rows - 1); // 0 to 1, top to bottom
-    const y = 0.8 - v * 1.6; // Top at 0.8, bottom at -0.8
-    
-    // Width profile: narrow at neck, wide at shoulders, tapers to hem
-    let width;
-    if (v < 0.1) {
-      // Neck area - narrow
-      width = 0.25;
-    } else if (v < 0.3) {
-      // Shoulders - widest
-      width = 0.55 + (v - 0.1) * 1.5;
-    } else if (v < 0.5) {
-      // Upper torso
-      width = 0.85 - (v - 0.3) * 0.5;
-    } else {
-      // Lower torso - slight taper
-      width = 0.75 - (v - 0.5) * 0.2;
-    }
-    
-    // Create ring of vertices
-    for (let col = 0; col < cols; col++) {
-      const u = col / cols;
-      const angle = u * Math.PI * 2;
-      
-      // Add depth (front to back)
-      const depth = Math.sin(angle) * 0.15;
-      const x = Math.cos(angle) * width;
-      const z = depth;
-      
-      vertices.push(x, y, z);
-    }
-  }
-  
-  // Create faces
-  for (let row = 0; row < rows - 1; row++) {
-    for (let col = 0; col < cols; col++) {
-      const a = row * cols + col;
-      const b = row * cols + ((col + 1) % cols);
-      const c = (row + 1) * cols + ((col + 1) % cols);
-      const d = (row + 1) * cols + col;
-      
-      indices.push(a, b, c);
-      indices.push(a, c, d);
-    }
-  }
-  
-  geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
-  geometry.setIndex(indices);
-  geometry.computeVertexNormals();
-  
-  return new THREE.Mesh(geometry, material);
-}
-
-/**
- * Creates a short sleeve
- */
-function createSleeveMesh(material) {
-  const geometry = new THREE.CylinderGeometry(
-    0.14,  // top radius
-    0.12,  // bottom radius
-    0.3,   // height
-    16,    // segments
-    4
-  );
-  
-  geometry.rotateZ(Math.PI / 2); // Horizontal
-  const mesh = new THREE.Mesh(geometry, material);
-  return mesh;
-}
-
-/**
- * Creates crew neck opening
- */
-function createCrewNeck(material) {
-  const geometry = new THREE.TorusGeometry(0.18, 0.012, 12, 24);
-  const mesh = new THREE.Mesh(geometry, material);
-  mesh.rotation.x = Math.PI / 2;
-  mesh.position.y = 0.75;
-  return mesh;
-}
-
-/**
- * Creates chest stripe detail
- */
-function createChestStripe(material) {
-  const geometry = new THREE.TorusGeometry(0.6, 0.01, 8, 32, Math.PI * 1.8);
-  const mesh = new THREE.Mesh(geometry, material);
-  mesh.rotation.x = Math.PI / 2;
-  mesh.position.y = 0.2;
-  return mesh;
-}
+// Simple box-based t-shirt construction removed - all logic moved to createTShirt()
 
 /**
  * Generate a random garment color palette
