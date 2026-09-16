@@ -77,6 +77,12 @@ const translations = {
         'project-shop-desc': 'پلتفرم جامع مشاوره و انتخاب دانشگاه با فرانت‌اند React، بک‌اند Django و پایگاه داده MySQL. در دسترس در inteladvisor.ir.',
         'project-todo': 'اپلیکیشن ToDo',
         'project-todo-desc': 'اپلیکیشن مدیریت کارها با React.js و TypeScript. شامل API های مختلف و استفاده از React Router DOM برای مسیریابی. طراحی واکنش‌گرا با Tailwind CSS.',
+        'project-barbershop': 'آرایشگاه مردانه کلاسیک',
+        'project-barbershop-desc': 'صفحه فرود حرفه‌ای آرایشگاه با خدمات، نظرات مشتریان و امکان رزرو نوبت. طراحی موبایل‌فرست با فوکوس بر تبدیل بازدیدکننده به مشتری.',
+        'project-clinic': 'کلینیک دندانپزشکی رادیانت اسمایل',
+        'project-clinic-desc': 'وب‌سایت کلینیک دندانپزشکی با فوکوس بر اعتماد، لیست خدمات، پروفایل پزشکان و رزرو نوبت. طراحی تمیز و پزشکی با نظرات بیماران.',
+        'project-tutor': 'تدریس خصوصی الکس مورگان',
+        'project-tutor-desc': 'وب‌سایت خدمات تدریس خصوصی با تمرکز بر نتایج، داستان‌های موفقیت دانش‌آموزان، پکیج‌های آموزشی و رزرو مشاوره. طراحی گرم و الهام‌بخش.',
         'project-view': 'مشاهده پروژه',
         
         // Tech Tags
@@ -89,6 +95,9 @@ const translations = {
         'tech-react': 'React.js',
         'tech-typescript': 'TypeScript',
         'tech-router': 'React Router',
+        'tech-html': 'HTML5',
+        'tech-css': 'CSS3',
+        'tech-js': 'JavaScript',
         
         // Contact Section
         'contact-title': 'تماس با من',
@@ -165,6 +174,12 @@ const translations = {
         'project-shop-desc': 'Comprehensive university advising platform powered by React on the frontend, Django on the backend, and MySQL for data storage. Live on inteladvisor.ir.',
         'project-todo': 'Todo Application',
         'project-todo-desc': 'Task management application built with React.js and TypeScript. Features various APIs and React Router DOM for navigation. Responsive design with Tailwind CSS.',
+        'project-barbershop': 'Classic Cuts Barbershop',
+        'project-barbershop-desc': 'Professional barbershop landing page featuring services, testimonials, and booking integration. Mobile-first design with conversion-focused layout.',
+        'project-clinic': 'Radiant Smile Dental Clinic',
+        'project-clinic-desc': 'Trust-focused dental clinic website with service listings, doctor profiles, and appointment booking. Clean, medical-grade design with patient testimonials.',
+        'project-tutor': 'Alex Morgan Tutoring',
+        'project-tutor-desc': 'Results-driven tutoring service website showcasing student success stories, teaching packages, and consultation booking. Warm, inspiring design focused on transformation.',
         'project-view': 'View Project',
         
         // Tech Tags
@@ -177,6 +192,9 @@ const translations = {
         'tech-react': 'React.js',
         'tech-typescript': 'TypeScript',
         'tech-router': 'React Router',
+        'tech-html': 'HTML5',
+        'tech-css': 'CSS3',
+        'tech-js': 'JavaScript',
         
         // Contact Section
         'contact-title': 'Get In Touch',
