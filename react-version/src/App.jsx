@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import Atelier from '../../src/demos/atelier/Atelier';
+import Atelier from './demos/atelier/Atelier';
 import './App.css';
 
 function Home() {
